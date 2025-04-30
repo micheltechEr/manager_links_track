@@ -8,12 +8,22 @@ class UserController{
         $this->model = new User();
     }
 
+    public function showSignUpPage(){
+        $viewPath = __DIR__ . '/../view/register.php';
+        if (!file_exists($viewPath)) {
+            http_response_code(500);
+            echo "Erro: Visualização não encontrada";
+            return;
+        }
+        require $viewPath;
+    }
+
     public function registerUser(){
         try{
             $name = trim($_POST['name'] ?? '');
             $email = trim($_POST['email'] ?? '');
             $password = trim($_POST['password'] ?? '');
-    
+            
             if(empty($name) || empty($email) || empty($password)){
                 return 'Preencha todos os campos';
             }
