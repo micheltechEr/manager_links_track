@@ -9,7 +9,7 @@ class UserController{
     }
 
     public function showSignUpPage(){
-        $viewPath = __DIR__ . '/../view/register.php';
+        $viewPath = __DIR__ . '/../register';
         if (!file_exists($viewPath)) {
             http_response_code(500);
             echo "Erro: Visualização não encontrada";
@@ -20,6 +20,7 @@ class UserController{
 
     public function registerUser(){
         try{
+            header('Content-Type: application/json');
             $name = trim($_POST['name'] ?? '');
             $email = trim($_POST['email'] ?? '');
             $password = trim($_POST['password'] ?? '');
@@ -30,10 +31,16 @@ class UserController{
     
             if(!filter_var($email,FILTER_VALIDATE_EMAIL)){
                 return 'Preencha com um endereço de e-mail válido';
+                echo json_encode([
+                    'status' => 'error',
+                    'message' =>  'Formato de e-mail inválido.'
+                ]);
             }
             
             $hashedPassword = password_hash($password,PASSWORD_BCRYPT);
-            $this->model->create($name,$email,$password);
+
+            $this->model->register($name,$email,$hashedPassword);
+            header("Location: /../view/register.php");
             return "Usuário cadastrado com sucesso";
         }
         catch(PDOException){

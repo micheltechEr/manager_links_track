@@ -94,8 +94,10 @@
 </head>
 <body>
     <div class="container">
+    <div id="feedback"></div>
+
         <h1>Criar Conta</h1>
-        <form id="register-form">
+        <form id="register-form" method="POST" action="process_data/user_process_data.php">
             <div class="form-group">
                 <label for="name">Nome</label>
                 <input type="text" id="name" name="name" required>
@@ -119,20 +121,5 @@
         </div>
     </div>
 
-    <script>
-        document.getElementById('register-form').addEventListener('submit', function(event) {
-            event.preventDefault();
-            
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            
-            console.log('Dados do formulário:', { name, email, password });
-            alert('Registro realizado com sucesso!');
-            
-            // Aqui você normalmente enviaria os dados para um servidor
-            // usando fetch() ou outro método de requisição
-        });
-    </script>
 </body>
 </html>
