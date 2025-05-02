@@ -7,10 +7,22 @@ class User{
         $this->pdo = Database::getInstance()->getConnection();
     }
 
+    public function doesExistUser($email){
+        $stmt = $this->pdo->prepare("SELECT email FROM users WHERE ?");
+        $stmt->execute([$email]);
+        if($stmt->fetch()){
+            return true;
+        }
+        return false;
+    }
+
     public function register($name,$email,$password){
         try{
             $stmt = $this->pdo->prepare("INSERT INTO users (`name`,email,`password`) VALUES (?,?,?)");
-            $stmt->execute([$name,$email,$password]);
+            $doesExistEmail = $this->doesExistUser($email);
+            if(!$doesExistEmail){
+                $stmt->execute([$name,$email,$password]);
+            }
             return true;
         }
         catch (PDOException $e){

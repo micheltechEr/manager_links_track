@@ -91,6 +91,7 @@
             text-decoration: underline;
         }
     </style>
+    <script src="js/validator.js"> </script>
 </head>
 <body>
     <div class="container">

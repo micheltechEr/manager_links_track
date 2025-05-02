@@ -9,7 +9,7 @@ class UserController{
     }
 
     public function showSignUpPage(){
-        $viewPath = __DIR__ . '/../register';
+        $viewPath = __DIR__ . '/../view/register.php';
         if (!file_exists($viewPath)) {
             http_response_code(500);
             echo "Erro: Visualização não encontrada";
@@ -17,7 +17,7 @@ class UserController{
         }
         require $viewPath;
     }
-
+    
     public function registerUser(){
         try{
             header('Content-Type: application/json');
@@ -36,11 +36,11 @@ class UserController{
                     'message' =>  'Formato de e-mail inválido.'
                 ]);
             }
-            
+
             $hashedPassword = password_hash($password,PASSWORD_BCRYPT);
 
             $this->model->register($name,$email,$hashedPassword);
-            header("Location: /../view/register.php");
+            header("Location: http://" . $_SERVER['HTTP_HOST'] . "/manager_links_track/app/register");
             return "Usuário cadastrado com sucesso";
         }
         catch(PDOException){
