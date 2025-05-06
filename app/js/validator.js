@@ -1,12 +1,26 @@
-fetch('process_data/user_process_data.php',{
-    method:'POST',
-    body: new FormData(document.getElementById('register-form'))
-})
+function validateData() {
+    document.getElementById('register-form').addEventListener('submit', async function (e) {
+        e.preventDefault();
+        const formData = new FormData(this);
 
-.then(res => res.json())
-.then(data => {
-    const msgBox = document.getElementById('feedback');
+        try {
+            const res = await fetch('registerUser', {
+                method: 'POST',
+                body: formData
+            });
 
-    msgBox.innerHTML = data.message;
-    msgBox.style.color = data.status === 'error' ? 'red' : 'green';
-});
+            const data = await res.json();
+
+            document.querySelector('.feedback').textContent = data.message;
+
+            if (data.status === 'success') {
+                window.location.href = data.redirect;
+            }
+        } catch (error) {
+            console.error('Erro ao processar o cadastro:', error);
+            document.querySelector('.feedback').textContent = 'Erro interno no servidor';
+        }
+    });
+}
+
+window.addEventListener("load", validateData);

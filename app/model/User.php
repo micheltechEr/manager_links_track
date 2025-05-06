@@ -8,9 +8,9 @@ class User{
     }
 
     public function doesExistUser($email){
-        $stmt = $this->pdo->prepare("SELECT email FROM users WHERE ?");
+        $stmt = $this->pdo->prepare("SELECT email FROM users WHERE email =  ?");
         $stmt->execute([$email]);
-        if($stmt->fetch()){
+        if($stmt->fetch()){            
             return true;
         }
         return false;
@@ -20,13 +20,27 @@ class User{
         try{
             $stmt = $this->pdo->prepare("INSERT INTO users (`name`,email,`password`) VALUES (?,?,?)");
             $doesExistEmail = $this->doesExistUser($email);
-            if(!$doesExistEmail){
                 $stmt->execute([$name,$email,$password]);
-            }
             return true;
         }
         catch (PDOException $e){
             error_log("Erro durante a criação do usuário");
+            return false;
+        }
+    }
+
+    public function loginUser($email,$password){
+        try{
+            $currentUser = doesExistUser($email);
+            if($currentUser && password_verify($password,$currentUser['password'])){
+                session_start();
+                $_SESSION['user_id'] = $currentUser['id'];
+                return true;
+            }
+            return false;
+        }
+        catch(PDOException $e){
+            error_log("Erro durante o login");
             return false;
         }
     }

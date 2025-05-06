@@ -227,7 +227,7 @@
                     </div>
                     
                     <div class="hero-buttons">
-                        <a href="register.html" class="btn btn-primary">Começar agora</a>
+                        <a href="register" class="btn btn-primary">Começar agora</a>
                         <a href="#saiba-mais" class="btn btn-secondary">Saiba mais</a>
                     </div>
                 </div>

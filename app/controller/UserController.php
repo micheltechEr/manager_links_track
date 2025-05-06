@@ -17,6 +17,16 @@ class UserController{
         }
         require $viewPath;
     }
+
+    public function showLoginPage(){
+        $viewPath = __DIR__ .'/../view/login.php';
+        if(!file_exists($viewPath)){
+            http_response_code(500);
+            echo "Erro: Visualização não encontrada";
+            return;
+        }
+        require $viewPath;
+    }
     
     public function registerUser(){
         try{
@@ -26,27 +36,45 @@ class UserController{
             $password = trim($_POST['password'] ?? '');
             
             if(empty($name) || empty($email) || empty($password)){
-                return 'Preencha todos os campos';
+                echo json_encode([
+                    'status' => 'error',
+                    'message' => 'Preencha todos os campos'
+                ]);
+                return;
             }
     
             if(!filter_var($email,FILTER_VALIDATE_EMAIL)){
-                return 'Preencha com um endereço de e-mail válido';
                 echo json_encode([
                     'status' => 'error',
                     'message' =>  'Formato de e-mail inválido.'
                 ]);
+                return;
             }
 
             $hashedPassword = password_hash($password,PASSWORD_BCRYPT);
-
+            $existMail = $this->model->doesExistUser($email);
+            if($existMail){
+                echo json_encode([
+                    'status' => 'error',
+                    'message' =>  'E-mail já existente'
+                ]);
+                return;
+            }
             $this->model->register($name,$email,$hashedPassword);
-            header("Location: http://" . $_SERVER['HTTP_HOST'] . "/manager_links_track/app/register");
-            return "Usuário cadastrado com sucesso";
+            echo json_encode([
+                'status' => 'success',
+                'message' => 'Usuário cadastrado com sucesso',
+                'redirect' => 'login'
+            ]);
         }
         catch(PDOException){
-            return "Erro ao cadastrar usuário";
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Erro ao cadastrar usuário',
+            ]);
         }
-
     }
+
+ 
 }
 ?>
