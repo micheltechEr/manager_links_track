@@ -6,7 +6,7 @@
     <title>Página de Registro</title>
     <link rel="stylesheet" href="css/register.css" />
 </head>
-<body>
+<body id="sign_up_page">
     <div class="container">
         <h1>Criar Conta</h1>
         <span class="error-message feedback"></span>
@@ -32,7 +32,7 @@
         </form>
         
         <div class="login-link">
-            Já tem uma conta? <a href="#">Faça login</a>
+            Já tem uma conta? <a href="login">Faça login</a>
         </div>
     </div>
     <script src="js/validator.js"> </script>

@@ -8,10 +8,11 @@ class User{
     }
 
     public function doesExistUser($email){
-        $stmt = $this->pdo->prepare("SELECT email FROM users WHERE email =  ?");
+        $stmt = $this->pdo->prepare("SELECT id, password, email FROM users WHERE email = ?");
         $stmt->execute([$email]);
-        if($stmt->fetch()){            
-            return true;
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        if($user){            
+            return $user;
         }
         return false;
     }
@@ -19,8 +20,7 @@ class User{
     public function register($name,$email,$password){
         try{
             $stmt = $this->pdo->prepare("INSERT INTO users (`name`,email,`password`) VALUES (?,?,?)");
-            $doesExistEmail = $this->doesExistUser($email);
-                $stmt->execute([$name,$email,$password]);
+            $stmt->execute([$name,$email,$password]);
             return true;
         }
         catch (PDOException $e){
@@ -28,21 +28,45 @@ class User{
             return false;
         }
     }
+    private function creatrTokenAuthUser($email){
+        $token = bin2hex(random_bytes(50));
+        $expires = date('Y-m-d H:i:s',strtotime('+7 days'));
 
-    public function loginUser($email,$password){
+        $stmt = $this->pdo->prepare("UPDATE users SET remember_token = ? ")
+    }
+
+    public function login($email,$password){
         try{
-            $currentUser = doesExistUser($email);
-            if($currentUser && password_verify($password,$currentUser['password'])){
-                session_start();
-                $_SESSION['user_id'] = $currentUser['id'];
-                return true;
+            $user = $this->doesExistUser($email);
+            if(!$user){
+                return[
+                    'success' => false,
+                    'message' => 'Usuário não encontrado'
+                ];
             }
-            return false;
+             if(!password_verify($password,$user['password'])){
+                    return[
+                        'success' => false,
+                        'message' => 'E-mail ou senha incorretos'
+                    ];
+                }
+            session_start();
+            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['email'] = $user['email'];
+
+            return[
+                'success' => true,
+                'message' => 'Login realizado com sucesso'
+            ];
+            
         }
         catch(PDOException $e){
-            error_log("Erro durante o login");
-            return false;
+            return[
+                'success' => false,
+                'message' => 'Erro ao realizar o login'
+            ];
         }
     }
+
 }
 ?>

@@ -6,7 +6,7 @@
     <title>Login - Gerenciador de Links</title>
     <link rel="stylesheet" href="css/login.css" />
 </head>
-<body>
+<body id="login-page">
     <header class="header">
         <a href="index.html" class="logo">
             <span class="logo-icon">🔗</span>
@@ -21,7 +21,7 @@
                 <p class="login-subtitle">Entre para acessar seus links encurtados</p>
             </div>
             
-            <form id="login-form">
+            <form id="login-form" method="POST" action="loginUser">
                 <div class="form-group">
                     <label for="email">Email</label>
                     <input type="email" id="email" name="email" placeholder="Seu email" required>
@@ -31,13 +31,15 @@
                     <label for="password">Senha</label>
                     <input type="password" id="password" name="password" placeholder="Sua senha" required>
                 </div>
+
+                <span class="error-message feedback"></span>
                 
                 <div class="forgot-password">
                     <a href="#">Esqueceu a senha?</a>
                 </div>
                 
                 <div class="remember-me">
-                    <input type="checkbox" id="remember" name="remember">
+                    <input type="checkbox" id="remember" name="remember_me">
                     <label for="remember">Lembrar de mim</label>
                 </div>
                 
@@ -53,6 +55,7 @@
     <footer class="footer">
         &copy; 2025 Gerenciador de Links. Todos os direitos reservados.
     </footer>
-    
+    <script src="js/validator.js"> </script>
+
 </body>
 </html>

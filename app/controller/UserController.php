@@ -75,6 +75,51 @@ class UserController{
         }
     }
 
- 
+    public function loginUser(){
+        try{
+            header('Content-Type: application/json');
+            $email = trim($_POST['email'] ?? '');
+            $password = trim($_POST['password'] ?? '');
+
+            if(empty($email) || empty($password)){
+                http_response_code(400);
+                echo json_encode([
+                    'status' => 'error',
+                    'message' => 'Preencha todos os campos'
+                ]);
+                return;
+            }
+    
+            if(!filter_var($email,FILTER_VALIDATE_EMAIL)){
+                http_response_code(400);
+                echo json_encode([
+                    'status' => 'error',
+                    'message' =>  'Formato de e-mail inválido.'
+                ]);
+                return;
+            }
+            $resultLogin = $this->model->login($email,$password);
+
+            if($resultLogin['success']){
+                http_response_code(200);
+                echo json_encode([
+                    'status' => 'success',
+                    'message' => 'Login realizado com sucesso',
+                ]);
+            }
+            else{
+                echo json_encode([
+                    'status' => 'error',
+                    'message' => 'Usuário ou senha incorretos'
+                ]);
+            }
+        }
+        catch(PDOException){
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Erro ao logar',
+            ]);
+        }
+    }
 }
 ?>
