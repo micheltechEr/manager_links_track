@@ -28,12 +28,26 @@ class User{
             return false;
         }
     }
-    private function creatrTokenAuthUser($email){
+    public function createTokenAuthUser($email){
         $token = bin2hex(random_bytes(50));
         $expires = date('Y-m-d H:i:s',strtotime('+7 days'));
 
-        $stmt = $this->pdo->prepare("UPDATE users SET remember_token = ? ")
+        $stmt = $this->pdo->prepare("UPDATE users SET remember_token = ?, remember_expires = ? WHERE email = ?");
+        $stmt->execute([$token,$expires,$email]);
+
+        setcookie(
+            'remember_token',
+            $token,
+            [
+                'expires' => time() + (86400 * 7),
+                'path' => '/',
+                'secure' => true,
+                'httponly' => true,
+                'samesite' => 'Strict'
+            ]
+            );
     }
+
 
     public function login($email,$password){
         try{

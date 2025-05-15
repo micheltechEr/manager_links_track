@@ -42,8 +42,6 @@ function validateSignIn(){
                 const data = await res.json();
     
                 document.querySelector('.feedback').textContent = data.message;
-                    console.log(res)
-
                 if (data.status === 'success') {
                     // window.location.href = data.redirect;
                     console.log(data)

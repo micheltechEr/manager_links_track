@@ -17,6 +17,7 @@ class UserController{
         }
         require $viewPath;
     }
+    
 
     public function showLoginPage(){
         $viewPath = __DIR__ .'/../view/login.php';
@@ -80,6 +81,7 @@ class UserController{
             header('Content-Type: application/json');
             $email = trim($_POST['email'] ?? '');
             $password = trim($_POST['password'] ?? '');
+            $isRememberEnabled = isset($_POST['remember_me']) ? true : false;
 
             if(empty($email) || empty($password)){
                 http_response_code(400);
@@ -106,6 +108,9 @@ class UserController{
                     'status' => 'success',
                     'message' => 'Login realizado com sucesso',
                 ]);
+                if($isRememberEnabled){
+                    $this->model->createTokenAuthUser($email);
+                }
             }
             else{
                 echo json_encode([
