@@ -35,7 +35,7 @@
             Já tem uma conta? <a href="login">Faça login</a>
         </div>
     </div>
-    <script src="js/validator.js"> </script>
+    <script src="js/auth.js"> </script>
 
 </body>
 </html>

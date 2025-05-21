@@ -107,6 +107,7 @@ class UserController{
                 echo json_encode([
                     'status' => 'success',
                     'message' => 'Login realizado com sucesso',
+                    'redirect' => 'dashboard'
                 ]);
                 if($isRememberEnabled){
                     $this->model->createTokenAuthUser($email);
@@ -123,6 +124,18 @@ class UserController{
             echo json_encode([
                 'status' => 'error',
                 'message' => 'Erro ao logar',
+            ]);
+        }
+    }
+
+    public function logoutUser(){
+        try{
+            $this->model->logout();
+        }
+        catch(PDOException){
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Erro durante o logout'
             ]);
         }
     }

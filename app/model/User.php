@@ -48,31 +48,35 @@ class User{
             );
     }
 
-
     public function login($email,$password){
         try{
-            $user = $this->doesExistUser($email);
-            if(!$user){
+            if(empty($email) || empty($password)){
                 return[
-                    'success' => false,
-                    'message' => 'Usuário não encontrado'
+                    'success' => 'false',
+                    'message' => 'Preencha com ambos os campos'
                 ];
             }
-             if(!password_verify($password,$user['password'])){
-                    return[
-                        'success' => false,
-                        'message' => 'E-mail ou senha incorretos'
-                    ];
-                }
-            session_start();
+
+            $user = $this->doesExistUser($email);
+
+            if(password_verify($password,$user['password'])){
+                return [
+                    'success' => 'false',
+                    'message' => 'Email ou senha incorretos.'
+                ];
+            }
+
+            if (session_status() === PHP_SESSION_NONE) { 
+                 session_start();
+            }
+
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['email'] = $user['email'];
 
             return[
-                'success' => true,
+                'success' => 'success',
                 'message' => 'Login realizado com sucesso'
             ];
-            
         }
         catch(PDOException $e){
             return[
@@ -80,6 +84,20 @@ class User{
                 'message' => 'Erro ao realizar o login'
             ];
         }
+    }
+
+    public function logout(){
+        if(session_status() === PHP_SESSION_NONE){
+            session_start();
+        }
+        $_SESSION = [];
+        session_destroy();
+
+        http_response_code(200);
+        echo json_encode([
+            'status' => 'success',
+            'message' => 'Logout realizado com sucesso',
+        ]);
     }
 
 }

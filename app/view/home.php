@@ -204,8 +204,8 @@
                 Gerenciador de Links
             </div>
             <div class="nav-buttons">
-                <a href="login.html" class="btn btn-login">Login</a>
-                <a href="register.html" class="btn btn-register">Cadastro</a>
+                <a href="login" class="btn btn-login">Login</a>
+                <a href="register" class="btn btn-register">Cadastro</a>
             </div>
         </header>
         

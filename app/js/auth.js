@@ -32,29 +32,30 @@ function validateSignIn(){
         document.getElementById('login-form').addEventListener('submit',async function(e){
             e.preventDefault();
             const formData = new FormData(this);
-    
             try {
                 const res = await fetch('loginUser', {
                     method: 'POST',
                     body: formData
                 });
-    
+
                 const data = await res.json();
     
                 document.querySelector('.feedback').textContent = data.message;
                 if (data.status === 'success') {
-                    // window.location.href = data.redirect;
-                    console.log(data)
+                    window.location.href = data.redirect;
                 }
 
             } catch (error) {
                 console.error('Erro ao processar o login:', error);
-                    document.querySelector('.feedback').textContent = 'Erro interno no servidor';
+                document.querySelector('.feedback').textContent = 'Erro interno no servidor';
             }
     
         })
     }
+}
 
+function logoutUser(){
+    //Escrever função logout
 }
 
 

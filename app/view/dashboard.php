@@ -539,10 +539,7 @@
             Gerenciador de Links
         </a>
         <div class="user-menu">
-            <div class="notifications">
-                <span>🔔</span>
-                <span class="notification-badge">3</span>
-            </div>
+
             <div class="user-avatar">JS</div>
         </div>
     </header>
@@ -553,14 +550,13 @@
                 <li><a href="#" class="active"><span class="menu-icon">📊</span> Dashboard</a></li>
                 <li><a href="#"><span class="menu-icon">🔗</span> Meus Links</a></li>
                 <li><a href="#"><span class="menu-icon">📈</span> Estatísticas</a></li>
-                <li><a href="#"><span class="menu-icon">📱</span> QR Codes</a></li>
                 
                 <div class="sidebar-divider"></div>
                 
                 <li><a href="#"><span class="menu-icon">👤</span> Perfil</a></li>
                 <li><a href="#"><span class="menu-icon">⚙️</span> Configurações</a></li>
                 <li><a href="#"><span class="menu-icon">❓</span> Ajuda</a></li>
-                <li><a href="index.html"><span class="menu-icon">🚪</span> Sair</a></li>
+                <li><a href="logout"><span class="menu-icon">🚪</span> Sair</a></li>
             </ul>
         </aside>
         
@@ -656,72 +652,8 @@
                                 <button class="action-btn" title="Copiar">📋</button>
                             </td>
                         </tr>
-                        <tr>
-                            <td class="link-url">
-                                <div class="original-url">https://blog.meusite.com.br/artigo-sobre-como-encurtar-links</div>
-                                <a href="#" class="short-url">encrt.io/x7y8z9</a>
-                            </td>
-                            <td class="link-clicks">876</td>
-                            <td class="link-date">08/05/2025</td>
-                            <td><span class="link-status status-active">Ativo</span></td>
-                            <td class="link-actions">
-                                <button class="action-btn" title="Editar">✏️</button>
-                                <button class="action-btn" title="Estatísticas">📊</button>
-                                <button class="action-btn" title="Copiar">📋</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="link-url">
-                                <div class="original-url">https://loja.exemplo.com.br/produtos/promocao-especial-de-verao</div>
-                                <a href="#" class="short-url">encrt.io/p7r5m2</a>
-                            </td>
-                            <td class="link-clicks">532</td>
-                            <td class="link-date">01/05/2025</td>
-                            <td><span class="link-status status-active">Ativo</span></td>
-                            <td class="link-actions">
-                                <button class="action-btn" title="Editar">✏️</button>
-                                <button class="action-btn" title="Estatísticas">📊</button>
-                                <button class="action-btn" title="Copiar">📋</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="link-url">
-                                <div class="original-url">https://webinar.exemplo.org/inscricao/evento-de-marketing-digital</div>
-                                <a href="#" class="short-url">encrt.io/e4v3n2</a>
-                            </td>
-                            <td class="link-clicks">289</td>
-                            <td class="link-date">28/04/2025</td>
-                            <td><span class="link-status status-inactive">Inativo</span></td>
-                            <td class="link-actions">
-                                <button class="action-btn" title="Editar">✏️</button>
-                                <button class="action-btn" title="Estatísticas">📊</button>
-                                <button class="action-btn" title="Copiar">📋</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="link-url">
-                                <div class="original-url">https://docs.google.com/spreadsheets/d/exemplo/edit?usp=sharing</div>
-                                <a href="#" class="short-url">encrt.io/g5d6c7</a>
-                            </td>
-                            <td class="link-clicks">156</td>
-                            <td class="link-date">25/04/2025</td>
-                            <td><span class="link-status status-active">Ativo</span></td>
-                            <td class="link-actions">
-                                <button class="action-btn" title="Editar">✏️</button>
-                                <button class="action-btn" title="Estatísticas">📊</button>
-                                <button class="action-btn" title="Copiar">📋</button>
-                            </td>
-                        </tr>
                     </tbody>
                 </table>
-                
-                <div class="pagination">
-                    <button class="page-btn disabled">«</button>
-                    <button class="page-btn active">1</button>
-                    <button class="page-btn">2</button>
-                    <button class="page-btn">3</button>
-                    <button class="page-btn">»</button>
-                </div>
             </div>
         </main>
     </div>
@@ -729,44 +661,6 @@
     <footer class="footer">
         &copy; 2025 Gerenciador de Links. Todos os direitos reservados.
     </footer>
-    
-    <script>
-        // JavaScript simples para ilustrar a funcionalidade
-        document.addEventListener('DOMContentLoaded', function() {
-            // Simulando a seleção de filtros de gráfico
-            const chartFilters = document.querySelectorAll('.chart-filter');
-            chartFilters.forEach(filter => {
-                filter.addEventListener('click', function() {
-                    chartFilters.forEach(f => f.classList.remove('active'));
-                    this.classList.add('active');
-                });
-            });
-            
-            // Botão de criar novo link
-            const createLinkBtn = document.querySelector('.create-link');
-            createLinkBtn.addEventListener('click', function() {
-                alert('Criar novo link encurtado');
-            });
-            
-            // Ações da tabela
-            const actionButtons = document.querySelectorAll('.action-btn');
-            actionButtons.forEach(btn => {
-                btn.addEventListener('click', function() {
-                    alert('Ação: ' + this.getAttribute('title'));
-                });
-            });
-            
-            // Paginação
-            const pageButtons = document.querySelectorAll('.page-btn:not(.disabled)');
-            pageButtons.forEach(btn => {
-                btn.addEventListener('click', function() {
-                    pageButtons.forEach(b => b.classList.remove('active'));
-                    if (!this.classList.contains('disabled')) {
-                        this.classList.add('active');
-                    }
-                });
-            });
-        });
-    </script>
+
 </body>
 </html>

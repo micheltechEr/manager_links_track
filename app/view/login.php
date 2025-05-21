@@ -55,7 +55,7 @@
     <footer class="footer">
         &copy; 2025 Gerenciador de Links. Todos os direitos reservados.
     </footer>
-    <script src="js/validator.js"> </script>
+    <script src="js/auth.js"> </script>
 
 </body>
 </html>
