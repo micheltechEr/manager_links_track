@@ -1,39 +1,43 @@
 <?php
-require_once  __DIR__  . '/../config/database.php';
+require_once __DIR__ . '/../config/database.php';
 
-class User{
+class User
+{
     private $pdo;
-    public function __construct(){
+    public function __construct()
+    {
         $this->pdo = Database::getInstance()->getConnection();
     }
 
-    public function doesExistUser($email){
+    public function doesExistUser($email)
+    {
         $stmt = $this->pdo->prepare("SELECT id, password, email FROM users WHERE email = ?");
         $stmt->execute([$email]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
-        if($user){            
+        if ($user) {
             return $user;
         }
         return false;
     }
 
-    public function register($name,$email,$password){
-        try{
+    public function register($name, $email, $password)
+    {
+        try {
             $stmt = $this->pdo->prepare("INSERT INTO users (`name`,email,`password`) VALUES (?,?,?)");
-            $stmt->execute([$name,$email,$password]);
+            $stmt->execute([$name, $email, $password]);
             return true;
-        }
-        catch (PDOException $e){
+        } catch (PDOException $e) {
             error_log("Erro durante a criação do usuário");
             return false;
         }
     }
-    public function createTokenAuthUser($email){
+    public function createTokenAuthUser($email)
+    {
         $token = bin2hex(random_bytes(50));
-        $expires = date('Y-m-d H:i:s',strtotime('+7 days'));
+        $expires = date('Y-m-d H:i:s', strtotime('+7 days'));
 
         $stmt = $this->pdo->prepare("UPDATE users SET remember_token = ?, remember_expires = ? WHERE email = ?");
-        $stmt->execute([$token,$expires,$email]);
+        $stmt->execute([$token, $expires, $email]);
 
         setcookie(
             'remember_token',
@@ -45,13 +49,14 @@ class User{
                 'httponly' => true,
                 'samesite' => 'Strict'
             ]
-            );
+        );
     }
 
-    public function login($email,$password){
-        try{
-            if(empty($email) || empty($password)){
-                return[
+    public function login($email, $password)
+    {
+        try {
+            if (empty($email) || empty($password)) {
+                return [
                     'success' => 'false',
                     'message' => 'Preencha com ambos os campos'
                 ];
@@ -59,45 +64,49 @@ class User{
 
             $user = $this->doesExistUser($email);
 
-            if(password_verify($password,$user['password'])){
+            if (!password_verify($password, $user['password'])) {
                 return [
                     'success' => 'false',
                     'message' => 'Email ou senha incorretos.'
                 ];
             }
 
-            if (session_status() === PHP_SESSION_NONE) { 
-                 session_start();
+            if (isset($$_SESSION['user_id'])) {
+                if (session_status() === PHP_SESSION_NONE) {
+                    session_start();
+                }
+
+                $_SESSION['user_id'] = $user['id'];
+                $_SESSION['email'] = $user['email'];
+
+                return [
+                    'success' => 'success',
+                    'message' => 'Login realizado com sucesso'
+                ];
             }
-
-            $_SESSION['user_id'] = $user['id'];
-            $_SESSION['email'] = $user['email'];
-
-            return[
-                'success' => 'success',
-                'message' => 'Login realizado com sucesso'
-            ];
-        }
-        catch(PDOException $e){
-            return[
+            else{
+                return[
+                    'success'=> 'false',
+                    'message'=> 'Usuário já autenticado'
+                ];
+            }
+        } catch (PDOException $e) {
+            return [
                 'success' => false,
                 'message' => 'Erro ao realizar o login'
             ];
         }
     }
 
-    public function logout(){
-        if(session_status() === PHP_SESSION_NONE){
-            session_start();
-        }
+    public function logout()
+    {
+        session_start();
         $_SESSION = [];
         session_destroy();
-
-        http_response_code(200);
-        echo json_encode([
+        return [
             'status' => 'success',
             'message' => 'Logout realizado com sucesso',
-        ]);
+        ];
     }
 
 }

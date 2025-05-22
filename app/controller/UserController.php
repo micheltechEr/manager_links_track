@@ -101,8 +101,14 @@ class UserController{
                 return;
             }
             $resultLogin = $this->model->login($email,$password);
-
-            if($resultLogin['success']){
+                if($resultLogin['false'] && !isset($_COOKIE['remember_token']) ){
+                    echo json_encode([
+                    'status'=> 'error',
+                    'message'=> 'Usuário já autenticado',
+                    'redirect' => 'dashboard'
+                ]);
+            }
+            else if($resultLogin['success']){
                 http_response_code(200);
                 echo json_encode([
                     'status' => 'success',
@@ -113,6 +119,7 @@ class UserController{
                     $this->model->createTokenAuthUser($email);
                 }
             }
+
             else{
                 echo json_encode([
                     'status' => 'error',
@@ -130,7 +137,14 @@ class UserController{
 
     public function logoutUser(){
         try{
-            $this->model->logout();
+            $logoutSuccess =  $this->model->logout();
+            if($logoutSuccess['status'] == 'success'){
+                echo json_encode([
+                'status' => 'success',
+                'message' => 'Logout realizado com sucesso',
+                'redirect' => './'
+                ]);
+            }
         }
         catch(PDOException){
             echo json_encode([

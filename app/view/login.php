@@ -34,9 +34,9 @@
 
                 <span class="error-message feedback"></span>
                 
-                <div class="forgot-password">
+               <!-- <div class="forgot-password">
                     <a href="#">Esqueceu a senha?</a>
-                </div>
+                </div> !-->
                 
                 <div class="remember-me">
                     <input type="checkbox" id="remember" name="remember_me">

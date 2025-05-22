@@ -532,7 +532,7 @@
         }
     </style>
 </head>
-<body>
+<body class="dashboard-links">
     <header class="header">
         <a href="#" class="logo">
             <span class="logo-icon">🔗</span>
@@ -556,7 +556,7 @@
                 <li><a href="#"><span class="menu-icon">👤</span> Perfil</a></li>
                 <li><a href="#"><span class="menu-icon">⚙️</span> Configurações</a></li>
                 <li><a href="#"><span class="menu-icon">❓</span> Ajuda</a></li>
-                <li><a href="logout"><span class="menu-icon">🚪</span> Sair</a></li>
+                <li><a href="#" id="logout"><span class="menu-icon">🚪</span> Sair</a></li>
             </ul>
         </aside>
         
@@ -661,6 +661,7 @@
     <footer class="footer">
         &copy; 2025 Gerenciador de Links. Todos os direitos reservados.
     </footer>
+    <script src="js/auth.js"> </script>
 
 </body>
 </html>
