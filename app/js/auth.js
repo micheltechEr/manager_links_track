@@ -31,7 +31,7 @@ function validateSignIn() {
     if (loginPage) {
         document.getElementById('login-form').addEventListener('submit', async function (e) {
             e.preventDefault();
-            const formData = new FormData(this);
+            const formData = Object.fromEntries(new FormData(this));
             try {
                 const res = await fetch('loginUser', {
                     method: 'POST',
@@ -76,6 +76,7 @@ function logoutUser() {
         })
     }
 }
+
 
 window.addEventListener("load", function () {
     validateSignUpData();

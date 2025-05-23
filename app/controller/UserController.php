@@ -28,6 +28,16 @@ class UserController{
         }
         require $viewPath;
     }
+
+    public function showProfilePage(){
+        $viewPath = __DIR__ . '/../view/profile_user.php';
+        if(!file_exists($viewPath)){
+            http_response_code(500);
+            echo "Erro: Visualização não encontrada";
+            return;
+        }
+        require $viewPath;
+    }
     
     public function registerUser(){
         try{
@@ -100,24 +110,20 @@ class UserController{
                 ]);
                 return;
             }
+
             $resultLogin = $this->model->login($email,$password);
-                if($resultLogin['false'] && !isset($_COOKIE['remember_token']) ){
-                    echo json_encode([
-                    'status'=> 'error',
-                    'message'=> 'Usuário já autenticado',
-                    'redirect' => 'dashboard'
-                ]);
-            }
-            else if($resultLogin['success']){
+             if($resultLogin['success'] == true){
+                if($isRememberEnabled){
+                    $this->model->createTokenAuthUser($email);
+                }
+
                 http_response_code(200);
                 echo json_encode([
                     'status' => 'success',
                     'message' => 'Login realizado com sucesso',
                     'redirect' => 'dashboard'
                 ]);
-                if($isRememberEnabled){
-                    $this->model->createTokenAuthUser($email);
-                }
+
             }
 
             else{

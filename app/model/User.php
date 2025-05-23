@@ -52,12 +52,36 @@ class User
         );
     }
 
+public function isLogged(){
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
+
+    if (isset($_SESSION['user_id'])) {
+        return [
+            'success' => true,
+            'logged' => true,
+            'message' => 'Usuário já autenticado'
+        ];
+    } else {
+        return [
+            'success' => false,
+            'logged' => false,
+            'message' => 'Usuário não está autenticado'
+        ];
+    }
+}
+
     public function login($email, $password)
     {
         try {
+            if (session_status() === PHP_SESSION_NONE) {
+                session_start();
+            }
+
             if (empty($email) || empty($password)) {
                 return [
-                    'success' => 'false',
+                    'success' => false,
                     'message' => 'Preencha com ambos os campos'
                 ];
             }
@@ -66,30 +90,27 @@ class User
 
             if (!password_verify($password, $user['password'])) {
                 return [
-                    'success' => 'false',
+                    'success' => false,
                     'message' => 'Email ou senha incorretos.'
                 ];
             }
-
-            if (isset($$_SESSION['user_id'])) {
-                if (session_status() === PHP_SESSION_NONE) {
-                    session_start();
-                }
-
-                $_SESSION['user_id'] = $user['id'];
-                $_SESSION['email'] = $user['email'];
-
+            
+            if ($this->isLogged()['logged']) {
                 return [
-                    'success' => 'success',
-                    'message' => 'Login realizado com sucesso'
+                    'success' => false,
+                    'message' => 'Usuário já está autenticado'
                 ];
             }
-            else{
-                return[
-                    'success'=> 'false',
-                    'message'=> 'Usuário já autenticado'
-                ];
-            }
+
+            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['email'] = $user['email'];
+
+            return[
+                'success' => true,
+                'message' => 'Login realizado com sucesso',
+                'redirect' => 'dashboard'
+            ];
+
         } catch (PDOException $e) {
             return [
                 'success' => false,
