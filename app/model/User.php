@@ -11,7 +11,7 @@ class User
 
     public function doesExistUser($email)
     {
-        $stmt = $this->pdo->prepare("SELECT id, password, email FROM users WHERE email = ?");
+        $stmt = $this->pdo->prepare("SELECT id, password, email,name FROM users WHERE email = ?");
         $stmt->execute([$email]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
         if ($user) {
@@ -52,25 +52,25 @@ class User
         );
     }
 
-public function isLogged(){
-    if (session_status() === PHP_SESSION_NONE) {
-        session_start();
-    }
+    public function isLogged(){
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
 
-    if (isset($_SESSION['user_id'])) {
-        return [
-            'success' => true,
-            'logged' => true,
-            'message' => 'Usuário já autenticado'
-        ];
-    } else {
-        return [
-            'success' => false,
-            'logged' => false,
-            'message' => 'Usuário não está autenticado'
-        ];
+        if (isset($_SESSION['user_id'])) {
+            return [
+                'success' => true,
+                'logged' => true,
+                'message' => 'Usuário já autenticado'
+            ];
+        } else {
+            return [
+                'success' => false,
+                'logged' => false,
+                'message' => 'Usuário não está autenticado'
+            ];
+        }
     }
-}
 
     public function login($email, $password)
     {
@@ -88,6 +88,13 @@ public function isLogged(){
 
             $user = $this->doesExistUser($email);
 
+            if (!$user) {
+                return [
+                    'success' => false,
+                    'message' => 'Email ou senha incorretos'
+                ];
+            }
+
             if (!password_verify($password, $user['password'])) {
                 return [
                     'success' => false,
@@ -98,12 +105,15 @@ public function isLogged(){
             if ($this->isLogged()['logged']) {
                 return [
                     'success' => false,
+                    'redirect' => 'dashboard',
                     'message' => 'Usuário já está autenticado'
                 ];
             }
 
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['email'] = $user['email'];
+            $_SESSION['name'] = $user['name'];
+            $_SESSION['password'] = $user['password'];
 
             return[
                 'success' => true,
@@ -118,7 +128,6 @@ public function isLogged(){
             ];
         }
     }
-
     public function logout()
     {
         session_start();
@@ -129,6 +138,7 @@ public function isLogged(){
             'message' => 'Logout realizado com sucesso',
         ];
     }
+    
 
 }
 ?>

@@ -556,7 +556,7 @@
                 <li><a href="profilePage"><span class="menu-icon">👤</span> Perfil</a></li>
                 <li><a href="#"><span class="menu-icon">⚙️</span> Configurações</a></li>
                 <li><a href="#"><span class="menu-icon">❓</span> Ajuda</a></li>
-                <li><a href="#" id="logout"><span class="menu-icon">🚪</span> Sair</a></li>
+                <li><a  id="logout"><span class="menu-icon">🚪</span> Sair</a></li>
             </ul>
         </aside>
         

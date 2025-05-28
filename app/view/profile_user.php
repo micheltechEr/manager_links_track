@@ -1,3 +1,8 @@
+<?php
+$userName = htmlspecialchars($_SESSION['name'] );
+$userEmail = htmlspecialchars($_SESSION['email'] );
+
+?> 
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -559,9 +564,8 @@
                 <div class="avatar-section">
                     <div class="profile-avatar">JS</div>
                     <div class="avatar-info">
-                        <div class="avatar-name">João Silva</div>
-                        <div class="avatar-email">joao.silva@email.com</div>
-                        <button class="change-avatar-btn">Alterar foto</button>
+                        <div class="avatar-name"><?= $userName ?></div>
+                        <div class="avatar-email"><?= $userEmail ?></div>
                     </div>
                 </div>
                 
@@ -569,40 +573,14 @@
                     <div class="form-grid">
                         <div class="form-group">
                             <label for="first-name">Nome</label>
-                            <input type="text" id="first-name" name="first-name" value="João" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="last-name">Sobrenome</label>
-                            <input type="text" id="last-name" name="last-name" value="Silva" required>
+                            <input type="text" id="first-name" name="first-name" value= <?= $userName ?> required>
                         </div>
                         
                         <div class="form-group">
                             <label for="email">Email</label>
-                            <input type="email" id="email" name="email" value="joao.silva@email.com" required>
+                            <input type="email" id="email" name="email" value= <?= $userEmail ?> required>
                         </div>
                         
-                        <div class="form-group">
-                            <label for="phone">Telefone</label>
-                            <input type="tel" id="phone" name="phone" value="(11) 99999-9999">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="company">Empresa</label>
-                            <input type="text" id="company" name="company" value="Minha Empresa Ltda">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="website">Website</label>
-                            <input type="url" id="website" name="website" value="https://meusite.com.br">
-                        </div>
-                        
-                        <div class="form-group full-width">
-                            <label for="bio">Biografia</label>
-                            <textarea id="bio" name="bio" placeholder="Conte um pouco sobre você...">Desenvolvedor e entusiasta de tecnologia, especializado em soluções web e marketing digital.</textarea>
-                        </div>
-                    </div>
-                    
                     <div class="form-actions">
                         <button type="button" class="btn btn-secondary">Cancelar</button>
                         <button type="submit" class="btn btn-primary">
@@ -627,76 +605,6 @@
                     <button class="btn btn-secondary">Alterar Senha</button>
                 </div>
                 
-                <div class="security-item">
-                    <div class="security-info">
-                        <h4>Autenticação de Dois Fatores</h4>
-                        <p>Adicione uma camada extra de segurança à sua conta</p>
-                    </div>
-                    <button class="btn btn-secondary">Configurar 2FA</button>
-                </div>
-                
-                <div class="security-item">
-                    <div class="security-info">
-                        <h4>Sessões Ativas</h4>
-                        <p>Gerencie dispositivos conectados à sua conta</p>
-                    </div>
-                    <button class="btn btn-secondary">Ver Sessões</button>
-                </div>
-            </div>
-            
-            <!-- Preferências -->
-            <div class="profile-section">
-                <h2 class="section-title">
-                    <span class="section-icon">⚙️</span>
-                    Preferências
-                </h2>
-                
-                <form id="preferences-form">
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label for="language">Idioma</label>
-                            <select id="language" name="language">
-                                <option value="pt-BR" selected>Português (Brasil)</option>
-                                <option value="en-US">English (US)</option>
-                                <option value="es-ES">Español</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="timezone">Fuso Horário</label>
-                            <select id="timezone" name="timezone">
-                                <option value="America/Sao_Paulo" selected>Brasília (GMT-3)</option>
-                                <option value="America/New_York">New York (GMT-5)</option>
-                                <option value="Europe/London">London (GMT+0)</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="theme">Tema</label>
-                            <select id="theme" name="theme">
-                                <option value="light" selected>Claro</option>
-                                <option value="dark">Escuro</option>
-                                <option value="auto">Automático</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="notifications">Notificações por Email</label>
-                            <select id="notifications" name="notifications">
-                                <option value="all" selected>Todas</option>
-                                <option value="important">Apenas importantes</option>
-                                <option value="none">Nenhuma</option>
-                            </select>
-                        </div>
-                    </div>
-                    
-                    <div class="form-actions">
-                        <button type="button" class="btn btn-secondary">Cancelar</button>
-                        <button type="submit" class="btn btn-primary">
-                            <span>💾</span> Salvar Preferências
-                        </button>
-                    </div>
-                </form>
             </div>
             
             <!-- Zona de Perigo -->

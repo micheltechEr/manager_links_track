@@ -31,14 +31,24 @@ function validateSignIn() {
     if (loginPage) {
         document.getElementById('login-form').addEventListener('submit', async function (e) {
             e.preventDefault();
-            const formData = Object.fromEntries(new FormData(this));
+
+            const formData = new FormData(this);
+            const urlSearchParams = new URLSearchParams();
+            for (const pair of formData.entries()) {
+                urlSearchParams.append(pair[0], pair[1]);
+            }
+
             try {
                 const res = await fetch('loginUser', {
                     method: 'POST',
-                    body: formData
+                    body: urlSearchParams.toString(),
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    }
                 });
 
                 const data = await res.json();
+                console.log(urlSearchParams.toString())
 
                 document.querySelector('.feedback').textContent = data.message;
                 if (data.status === 'success') {
@@ -49,8 +59,7 @@ function validateSignIn() {
                 console.error('Erro ao processar o login:', error);
                 document.querySelector('.feedback').textContent = 'Erro interno no servidor';
             }
-
-        })
+        });
     }
 }
 

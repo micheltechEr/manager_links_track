@@ -20,22 +20,37 @@ class UserController{
     
 
     public function showLoginPage(){
+
         $viewPath = __DIR__ .'/../view/login.php';
         if(!file_exists($viewPath)){
             http_response_code(500);
             echo "Erro: Visualização não encontrada";
             return;
         }
+        $isUserLogged = $this->model->isLogged();
+        if($isUserLogged['logged'] == true){
+            header('Location:dashboard');
+            exit;
+        }
         require $viewPath;
     }
 
     public function showProfilePage(){
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
         $viewPath = __DIR__ . '/../view/profile_user.php';
         if(!file_exists($viewPath)){
             http_response_code(500);
             echo "Erro: Visualização não encontrada";
             return;
         }
+
+        $isUserLogged = $this->model->isLogged();
+        if($isUserLogged['logged'] == false){
+            header('Location:login');
+         }
+
         require $viewPath;
     }
     
@@ -99,6 +114,7 @@ class UserController{
                     'status' => 'error',
                     'message' => 'Preencha todos os campos'
                 ]);
+                error_log("Conteúdo de \$_POST: " . print_r($_POST, true));
                 return;
             }
     
@@ -123,7 +139,6 @@ class UserController{
                     'message' => 'Login realizado com sucesso',
                     'redirect' => 'dashboard'
                 ]);
-
             }
 
             else{
@@ -140,7 +155,6 @@ class UserController{
             ]);
         }
     }
-
     public function logoutUser(){
         try{
             $logoutSuccess =  $this->model->logout();
