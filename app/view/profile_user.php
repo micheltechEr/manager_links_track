@@ -51,24 +51,6 @@ $userEmail = htmlspecialchars($_SESSION['email'] );
             font-size: 1.5rem;
         }
         
-        .user-menu {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-        
-        .user-avatar {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            background-color: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #4285f4;
-            font-weight: bold;
-            cursor: pointer;
-        }
         
         .notifications {
             position: relative;
@@ -198,18 +180,7 @@ $userEmail = htmlspecialchars($_SESSION['email'] );
             margin-bottom: 1.5rem;
         }
         
-        .profile-avatar {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background-color: #4285f4;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.8rem;
-            font-weight: bold;
-        }
+
         
         .avatar-info {
             flex: 1;
@@ -525,29 +496,11 @@ $userEmail = htmlspecialchars($_SESSION['email'] );
             <span class="logo-icon">🔗</span>
             Gerenciador de Links
         </a>
-        <div class="user-menu">
- 
-            <div class="user-avatar">JS</div>
-        </div>
     </header>
     
     <div class="container">
-        <aside class="sidebar">
-            <ul class="sidebar-menu">
-                <li><a href="dashboard.html"><span class="menu-icon">📊</span> Dashboard</a></li>
-                <li><a href="#"><span class="menu-icon">🔗</span> Meus Links</a></li>
-                <li><a href="#"><span class="menu-icon">📈</span> Estatísticas</a></li>
-                <li><a href="#"><span class="menu-icon">📱</span> QR Codes</a></li>
-                
-                <div class="sidebar-divider"></div>
-                
-                <li><a href="#" class="active"><span class="menu-icon">👤</span> Perfil</a></li>
-                <li><a href="#"><span class="menu-icon">⚙️</span> Configurações</a></li>
-                <li><a href="#"><span class="menu-icon">❓</span> Ajuda</a></li>
-                <li><a href="index.html"><span class="menu-icon">🚪</span> Sair</a></li>
-            </ul>
-        </aside>
-        
+
+    <?php require_once __DIR__ . '/partials/user_sidebar.php'  ?>
         <main class="main-content">
             <div class="page-header">
                 <h1 class="page-title">Perfil do Usuário</h1>
@@ -562,7 +515,6 @@ $userEmail = htmlspecialchars($_SESSION['email'] );
                 </h2>
                 
                 <div class="avatar-section">
-                    <div class="profile-avatar">JS</div>
                     <div class="avatar-info">
                         <div class="avatar-name"><?= $userName ?></div>
                         <div class="avatar-email"><?= $userEmail ?></div>
@@ -600,9 +552,21 @@ $userEmail = htmlspecialchars($_SESSION['email'] );
                 <div class="security-item">
                     <div class="security-info">
                         <h4>Senha</h4>
-                        <p>Última alteração há 3 meses</p>
+                        <p>Última alteração há </p>
                     </div>
                     <button class="btn btn-secondary">Alterar Senha</button>
+                </div>
+                <div class="change-pass">
+                    <form id="change-password" action method="post">                          
+                        <div class="form-group">
+                            <label for="current_password">Senha atual</label>
+                            <input type="current_password" id="current_password" name="current_password" required/>
+                        </div>
+                        <div class="form-group">
+                            <label for="new_password">Nova senha</label>
+                            <input type="new_password" id="new_password" name="new_password" required/>
+                        </div>
+                    </form>
                 </div>
                 
             </div>

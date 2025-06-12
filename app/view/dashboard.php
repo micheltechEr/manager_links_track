@@ -46,12 +46,6 @@
             font-size: 1.5rem;
         }
         
-        .user-menu {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-        
         .user-avatar {
             width: 36px;
             height: 36px;
@@ -538,28 +532,10 @@
             <span class="logo-icon">🔗</span>
             Gerenciador de Links
         </a>
-        <div class="user-menu">
-
-            <div class="user-avatar">JS</div>
-        </div>
     </header>
     
     <div class="container">
-        <aside class="sidebar">
-            <ul class="sidebar-menu">
-                <li><a href="#" class="active"><span class="menu-icon">📊</span> Dashboard</a></li>
-                <li><a href="#"><span class="menu-icon">🔗</span> Meus Links</a></li>
-                <li><a href="#"><span class="menu-icon">📈</span> Estatísticas</a></li>
-                
-                <div class="sidebar-divider"></div>
-                
-                <li><a href="profilePage"><span class="menu-icon">👤</span> Perfil</a></li>
-                <li><a href="#"><span class="menu-icon">⚙️</span> Configurações</a></li>
-                <li><a href="#"><span class="menu-icon">❓</span> Ajuda</a></li>
-                <li><a  id="logout"><span class="menu-icon">🚪</span> Sair</a></li>
-            </ul>
-        </aside>
-        
+    <?php require_once __DIR__ . '/partials/user_sidebar.php'  ?>        
         <main class="main-content">
             <div class="dashboard-header">
                 <h1 class="page-title">Dashboard</h1>
