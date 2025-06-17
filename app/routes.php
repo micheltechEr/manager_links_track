@@ -7,5 +7,6 @@ return [
     'loginUser' => 'UserController@loginUser',
     'logout' => 'UserController@logoutUser',
     'dashboard' => 'DashboardController@index',
-    'profilePage' => 'UserController@showProfilePage'
+    'profilePage' => 'UserController@showProfilePage',
+    'changePassword' => 'UserController@changePassword',
 ];

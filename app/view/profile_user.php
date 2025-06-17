@@ -490,7 +490,7 @@ $userEmail = htmlspecialchars($_SESSION['email'] );
         }
     </style>
 </head>
-<body>
+<body id="user-profile">
     <header class="header">
         <a href="dashboard.html" class="logo">
             <span class="logo-icon">🔗</span>
@@ -557,16 +557,17 @@ $userEmail = htmlspecialchars($_SESSION['email'] );
                     <button class="btn btn-secondary">Alterar Senha</button>
                 </div>
                 <div class="change-pass">
-                    <form id="change-password" action method="post">                          
+                    <form id="change-password"  action="changePassword" method="post">                          
                         <div class="form-group">
                             <label for="current_password">Senha atual</label>
-                            <input type="current_password" id="current_password" name="current_password" required/>
+                            <input type="password" id="current_password" name="current_password"  required/>
                         </div>
                         <div class="form-group">
                             <label for="new_password">Nova senha</label>
-                            <input type="new_password" id="new_password" name="new_password" required/>
+                            <input type="password"  id="new_password" name="new_password" required/>
                         </div>
                     </form>
+                    <span class="feedback"></span>
                 </div>
                 
             </div>

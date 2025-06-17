@@ -52,8 +52,7 @@ class UserController{
          }
 
         require $viewPath;
-    }
-    
+    }    
     public function registerUser(){
         try{
             header('Content-Type: application/json');
@@ -100,7 +99,6 @@ class UserController{
             ]);
         }
     }
-
     public function loginUser(){
         try{
             header('Content-Type: application/json');
@@ -170,6 +168,33 @@ class UserController{
             echo json_encode([
                 'status' => 'error',
                 'message' => 'Erro durante o logout'
+            ]);
+        }
+    }
+
+    public function changePass(){
+        try{
+             header('Content-Type: application/json');
+             $oldPass = trim($_POST['oldpass'] ?? '');
+             $newPass = trim($_POST['newpass'] ?? '');
+             
+             if(empty($oldPass) || empty($newPass)){
+                echo json_encode([
+                    'status'=> 'error',
+                    'message'=> 'Preencha ambos os campos',
+                ]);
+             }
+            $hashedPassword = password_hash($newPass,PASSWORD_BCRYPT);
+            $this->model->changepass($oldPass,$hashedPassword);
+                echo json_encode([
+                    'status'=> 'success',
+                    'message'=> 'Senha atualizada com sucesso',
+                ]);
+        }
+        catch(PDOException){
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Erro ao atualizar senha',
             ]);
         }
     }

@@ -139,6 +139,39 @@ class User
         ];
     }
     
-
+    public function changepass($oldPassword,$password){
+        try{
+            if(!$this->isLogged()['logged']){
+                return[
+                    'success' => false,
+                    'logged' => false,
+                    'message' => 'Usuário não autenticado'
+                ];
+            }
+            if(!password_verify($password, hash: $oldPassword)) {
+                return[
+                    'success' => false,
+                    'logged' => false,
+                    'message' => 'Senhas incompatíveis'
+                ];
+            }
+            $userId = $_SESSION['user_id'];
+            $stmt = $this->pdo->prepare("UPDATE users SET `password` = ? , update_password_at = ? WHERE `id` = ? ");
+            $timestampAtual = time();
+            $stmt->execute([$password,$timestampAtual,$userId['password']]);
+                return[
+                    'success' => true,
+                    'message' => 'Senha atualizada com sucesso',
+                    'redirect' => 'dashboard'
+                ];
+        }
+        catch (PDOException $e) {
+                return [
+                    'success' => false,
+                    'logged' => false,
+                    'message' => 'Houve algum erro na atualização da senha'
+                ];
+        }
+    }
 }
 ?>
