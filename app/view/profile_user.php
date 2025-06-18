@@ -1,7 +1,6 @@
 <?php
 $userName = htmlspecialchars($_SESSION['name'] );
 $userEmail = htmlspecialchars($_SESSION['email'] );
-
 ?> 
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -552,7 +551,7 @@ $userEmail = htmlspecialchars($_SESSION['email'] );
                 <div class="security-item">
                     <div class="security-info">
                         <h4>Senha</h4>
-                        <p>Última alteração há </p>
+                        <p>Última alteração em </p>
                     </div>
                     <button class="btn btn-secondary">Alterar Senha</button>
                 </div>
@@ -566,6 +565,7 @@ $userEmail = htmlspecialchars($_SESSION['email'] );
                             <label for="new_password">Nova senha</label>
                             <input type="password"  id="new_password" name="new_password" required/>
                         </div>
+                        <button type="submit">Atualizar</button>
                     </form>
                     <span class="feedback"></span>
                 </div>
@@ -626,6 +626,6 @@ $userEmail = htmlspecialchars($_SESSION['email'] );
     <footer class="footer">
         &copy; 2025 Gerenciador de Links. Todos os direitos reservados.
     </footer>
-    
+<script src="js/auth.js"> </script>
 </body>
 </html>

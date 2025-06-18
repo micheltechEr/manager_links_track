@@ -172,11 +172,11 @@ class UserController{
         }
     }
 
-    public function changePass(){
+    public function changePassword(){
         try{
              header('Content-Type: application/json');
-             $oldPass = trim($_POST['oldpass'] ?? '');
-             $newPass = trim($_POST['newpass'] ?? '');
+             $oldPass = trim($_POST['current_password'] ?? '');
+             $newPass = trim($_POST['new_password'] ?? '');
              
              if(empty($oldPass) || empty($newPass)){
                 echo json_encode([
@@ -184,12 +184,20 @@ class UserController{
                     'message'=> 'Preencha ambos os campos',
                 ]);
              }
-            $hashedPassword = password_hash($newPass,PASSWORD_BCRYPT);
-            $this->model->changepass($oldPass,$hashedPassword);
+            $result = $this->model->changepass($oldPass,$newPass);
+            if($result['success'] === true){
                 echo json_encode([
                     'status'=> 'success',
                     'message'=> 'Senha atualizada com sucesso',
+                    'redirect' => './'
                 ]);
+            }
+            else {
+            echo json_encode([
+                'status' => 'error',
+                'message' => $result['message']
+            ]);
+        }
         }
         catch(PDOException){
             echo json_encode([

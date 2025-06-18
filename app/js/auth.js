@@ -87,7 +87,6 @@ function logoutUser() {
 }
 
 function changePassword(){
-    console.log('Ranad')
     var userProfilePage = document.getElementById('user-profile');
     if(userProfilePage){
         document.getElementById('change-password').addEventListener("submit",async function (e){
@@ -97,7 +96,6 @@ function changePassword(){
             for (const pair of formData.entries()) {
                 urlSearchParams.append(pair[0], pair[1]);
             }
-
             try {
                 const res = await fetch('changePassword', {
                     method: 'POST',
@@ -123,7 +121,6 @@ function changePassword(){
         })
     }
 }
-
 
 window.addEventListener("load", function () {
     validateSignUpData();

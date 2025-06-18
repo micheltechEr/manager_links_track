@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . '/../config/database.php';
-
+date_default_timezone_set('America/Sao_Paulo');
 class User
 {
     private $pdo;
@@ -128,16 +128,16 @@ class User
             ];
         }
     }
-    public function logout()
-    {
+   public function logout()
+{
+    if (session_status() === PHP_SESSION_NONE) {
         session_start();
-        $_SESSION = [];
-        session_destroy();
-        return [
-            'status' => 'success',
-            'message' => 'Logout realizado com sucesso',
-        ];
     }
+
+    $_SESSION = [];
+
+    session_destroy();
+}
     
     public function changepass($oldPassword,$password){
         try{
@@ -148,21 +148,28 @@ class User
                     'message' => 'Usuário não autenticado'
                 ];
             }
-            if(!password_verify($password, hash: $oldPassword)) {
+            $stmt = $this->pdo->prepare("SELECT password FROM users WHERE id = ?");
+            $stmt->execute([$_SESSION['user_id']]);
+            $user = $stmt->fetch();
+
+            if(!password_verify($oldPassword, $user['password'])) {
                 return[
                     'success' => false,
                     'logged' => false,
-                    'message' => 'Senhas incompatíveis'
+                    'message' => 'Senha antiga incorreta'
                 ];
             }
             $userId = $_SESSION['user_id'];
+            $hashedPassword = password_hash($password,PASSWORD_BCRYPT);
             $stmt = $this->pdo->prepare("UPDATE users SET `password` = ? , update_password_at = ? WHERE `id` = ? ");
             $timestampAtual = time();
-            $stmt->execute([$password,$timestampAtual,$userId['password']]);
+            $timetoBd = date("Y-m-d H:i:s", $timestampAtual);
+            $stmt->execute([$hashedPassword,$timetoBd,$userId]);
+            $this->logout();
                 return[
                     'success' => true,
                     'message' => 'Senha atualizada com sucesso',
-                    'redirect' => 'dashboard'
+                    'redirect' => 'dashboard',
                 ];
         }
         catch (PDOException $e) {
