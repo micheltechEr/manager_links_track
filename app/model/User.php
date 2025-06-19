@@ -11,7 +11,7 @@ class User
 
     public function doesExistUser($email)
     {
-        $stmt = $this->pdo->prepare("SELECT id, password, email,name FROM users WHERE email = ?");
+        $stmt = $this->pdo->prepare("SELECT id, password, email,name,update_password_at FROM users WHERE email = ?");
         $stmt->execute([$email]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
         if ($user) {
@@ -114,6 +114,7 @@ class User
             $_SESSION['email'] = $user['email'];
             $_SESSION['name'] = $user['name'];
             $_SESSION['password'] = $user['password'];
+            $_SESSION['update_password_at'] = $user['update_password_at'];
 
             return[
                 'success' => true,
@@ -135,10 +136,21 @@ class User
     }
 
     $_SESSION = [];
-
     session_destroy();
+    return ['status'=> 'success','message'=> ''];
 }
-    
+    public function update_user_info($email,$name){
+        try{
+            if(!$this->isLogged()['logged']){
+                return[
+                    'success' => false,
+                    'logged' => false,
+                    'message' => 'Usuário não autenticado'
+                ];
+            }
+        $stmt = $this->pdo->prepare("SELECT ");  
+        }
+    }
     public function changepass($oldPassword,$password){
         try{
             if(!$this->isLogged()['logged']){

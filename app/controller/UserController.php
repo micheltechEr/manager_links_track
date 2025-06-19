@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . '/../model/User.php';
-
+require_once __DIR__ .'/../helpers/DateTimeConverter.php';
 class UserController{
     private $model;
     
@@ -50,6 +50,12 @@ class UserController{
         if($isUserLogged['logged'] == false){
             header('Location:login');
          }
+    $userName = htmlspecialchars($_SESSION['name']);
+    $userEmail = htmlspecialchars($_SESSION['email']);
+    $passLastUpdate = $_SESSION['update_password_at'] ?? null;
+    $passLastUpdateFormatted = $passLastUpdate 
+        ? DateTimeConverter::lapsedTimeConversor($passLastUpdate) 
+        : 'Desconhecido';
 
         require $viewPath;
     }    
@@ -206,5 +212,9 @@ class UserController{
             ]);
         }
     }
+
+    // public function updateUserInfo(){
+
+    // }
 }
 ?>

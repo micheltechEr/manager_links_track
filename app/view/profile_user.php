@@ -1,7 +1,4 @@
-<?php
-$userName = htmlspecialchars($_SESSION['name'] );
-$userEmail = htmlspecialchars($_SESSION['email'] );
-?> 
+ 
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -551,9 +548,8 @@ $userEmail = htmlspecialchars($_SESSION['email'] );
                 <div class="security-item">
                     <div class="security-info">
                         <h4>Senha</h4>
-                        <p>Última alteração em </p>
+                        <p>Última alteração  <?= $passLastUpdateFormatted ?> </p>
                     </div>
-                    <button class="btn btn-secondary">Alterar Senha</button>
                 </div>
                 <div class="change-pass">
                     <form id="change-password"  action="changePassword" method="post">                          
@@ -565,7 +561,8 @@ $userEmail = htmlspecialchars($_SESSION['email'] );
                             <label for="new_password">Nova senha</label>
                             <input type="password"  id="new_password" name="new_password" required/>
                         </div>
-                        <button type="submit">Atualizar</button>
+                        <button type="submit" class="btn btn-secondary">Alterar Senha</button>
+
                     </form>
                     <span class="feedback"></span>
                 </div>
@@ -580,15 +577,6 @@ $userEmail = htmlspecialchars($_SESSION['email'] );
                 </h2>
                 
                 <div class="danger-actions">
-                    <div class="danger-item">
-                        <div class="danger-info">
-                            <h4>Exportar Dados</h4>
-                            <p>Baixe uma cópia de todos os seus dados, incluindo links e estatísticas</p>
-                        </div>
-                        <button class="btn btn-secondary">
-                            <span>📥</span> Exportar
-                        </button>
-                    </div>
                     
                     <div class="danger-item">
                         <div class="danger-info">

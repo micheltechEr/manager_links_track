@@ -24,16 +24,6 @@
                 Perfil</a>
         </li>
         <li>
-            <a href="#">
-                <span class="menu-icon">⚙️</span>
-                Configurações</a>
-        </li>
-        <li>
-            <a href="#">
-                <span class="menu-icon">❓</span>
-                Ajuda</a>
-        </li>
-        <li>
             <a href="logout" id="logout">
                 <span class="menu-icon">🚪</span>
                 Sair</a>
