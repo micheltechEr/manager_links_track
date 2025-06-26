@@ -517,21 +517,21 @@
                     </div>
                 </div>
                 
-                <form id="profile-form">
+                <form id="update-user-info" action="updateUserInfo" method="POST">
                     <div class="form-grid">
                         <div class="form-group">
-                            <label for="first-name">Nome</label>
-                            <input type="text" id="first-name" name="first-name" value= <?= $userName ?> required>
+                            <label for="name">Nome</label>
+                            <input type="text" id="newname" name="newname" value= <?= $userName ?> required>
                         </div>
                         
                         <div class="form-group">
                             <label for="email">Email</label>
-                            <input type="email" id="email" name="email" value= <?= $userEmail ?> required>
+                            <input type="email" id="newemail" name="newemail" value="<?= htmlspecialchars($userEmail, ENT_QUOTES, 'UTF-8') ?>" required>
                         </div>
                         
                     <div class="form-actions">
                         <button type="button" class="btn btn-secondary">Cancelar</button>
-                        <button type="submit" class="btn btn-primary">
+                        <button  type="submit" class="btn btn-primary">
                             <span>💾</span> Salvar Alterações
                         </button>
                     </div>

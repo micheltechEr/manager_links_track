@@ -213,8 +213,34 @@ class UserController{
         }
     }
 
-    // public function updateUserInfo(){
-
-    // }
+    public function updateUserInfo(){
+        try{
+            header('Content-Type: application/json');
+            $newName = trim($_POST['newname'] ?? '');
+            $newEmail = trim($_POST['newemail'] ?? '');
+            if(empty($newName) || empty($newEmail)){
+                echo json_encode([
+                    'status'=> 'error',
+                    'message'=> 'Preencha todos os campos',
+                ]);
+            }
+            
+            $updateInfo = $this->model->update_user_info($newEmail,$newName);
+            if($updateInfo['success'] === true){
+                echo json_encode([
+                    'status'=> 'success',
+                    'message'=> 'Atualizado com sucesso, faça logout para atualização dos dados',
+                    'redirect' => 'dashboard'
+                ]);
+            }
+        }
+        catch(PDOException $e){
+            echo json_encode([
+                'status'=> 'error',
+                'message'=> $e->getMessage()
+            ]);
+        }
+    }
+    
 }
 ?>

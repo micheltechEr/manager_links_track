@@ -148,7 +148,20 @@ class User
                     'message' => 'Usuário não autenticado'
                 ];
             }
-        $stmt = $this->pdo->prepare("SELECT ");  
+            $stmt = $this->pdo->prepare("UPDATE `users` SET `email` = ? ,`name` = ? WHERE id = ? ");
+            $userId = $_SESSION['user_id'];
+            $stmt->execute([$email,$name,$userId]);
+             $this->logout();
+            return[
+                'success'=> true,
+                'message' => 'Dados atualizados com sucesso'
+            ];
+        }
+        catch (PDOException $e) {
+            return[
+                'success'=> false,
+                'message' => 'Os dados não foram atualizados porque ' . $e
+            ];
         }
     }
     public function changepass($oldPassword,$password){
@@ -190,6 +203,25 @@ class User
                     'logged' => false,
                     'message' => 'Houve algum erro na atualização da senha'
                 ];
+        }
+    }
+    public function deleteuser(){
+        try{
+            $userId = $_SESSION['user_id'];
+            $stmt = $this->pdo->prepare("DELETE FROM users WHERE id = ?");
+            $stmt->execute($userId);
+            $this->logout();
+            return[
+                'success' => true,
+                'message'=> 'Deletado com sucesso'
+            ];
+        }
+        catch(PDOException $e){
+            return[
+                'success' => false,
+                'logged' => false,
+                'message' => 'Houve algum erro na deleção'
+            ];
         }
     }
 }

@@ -122,11 +122,49 @@ function changePassword(){
     }
 }
 
+function changeInfo(){  
+  var userProfilePage = document.getElementById('user-profile');
+  if(userProfilePage){
+        document.getElementById('update-user-info').addEventListener("submit",async function (e){
+            e.preventDefault();
+            const formData = new FormData(this);
+            const urlSearchParams = new URLSearchParams();
+            for (const pair of formData.entries()) {
+                urlSearchParams.append(pair[0], pair[1]);
+            }
+            
+            try {
+                const res = await fetch('updateUserInfo', {
+                    method: 'POST',
+                    body: urlSearchParams.toString(),
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    }
+                });
+
+                const data = await res.json();
+                console.log(urlSearchParams.toString())
+
+                document.querySelector('.feedback').textContent = data.message;
+                if (data.status === 'success') {
+                    window.location.href = data.redirect;
+                }
+
+            } catch (error) {
+                console.error('Erro ao processar os dados:', error);
+                document.querySelector('.feedback').textContent = 'Erro interno no servidor';
+            } 
+
+        })
+    }
+}
+
 window.addEventListener("load", function () {
     validateSignUpData();
     validateSignIn();
     logoutUser();
     changePassword();
+    changeInfo();
 });
 
 

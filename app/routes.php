@@ -9,4 +9,6 @@ return [
     'dashboard' => 'DashboardController@index',
     'profilePage' => 'UserController@showProfilePage',
     'changePassword' => 'UserController@changePassword',
+    'updateUserInfo' => 'UserController@updateUserInfo',
+
 ];
