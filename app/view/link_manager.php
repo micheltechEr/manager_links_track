@@ -1,10 +1,9 @@
- 
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perfil - Gerenciador de Links</title>
+    <title>Gerenciador de Links</title>
     <style>
         * {
             margin: 0;
@@ -46,7 +45,6 @@
             margin-right: 10px;
             font-size: 1.5rem;
         }
-        
         
         .notifications {
             position: relative;
@@ -145,6 +143,35 @@
             font-size: 0.95rem;
         }
         
+        /* Stats */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .stat-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            padding: 1.5rem;
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #4285f4;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
         /* Profile sections */
         .profile-section {
             background-color: white;
@@ -166,46 +193,6 @@
         .section-icon {
             margin-right: 0.5rem;
             font-size: 1.2rem;
-        }
-        
-        /* Avatar section */
-        .avatar-section {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-        
-
-        
-        .avatar-info {
-            flex: 1;
-        }
-        
-        .avatar-name {
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 0.3rem;
-        }
-        
-        .avatar-email {
-            color: #666;
-            margin-bottom: 0.8rem;
-        }
-        
-        .change-avatar-btn {
-            background-color: #f8f9fa;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            padding: 0.5rem 1rem;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        
-        .change-avatar-btn:hover {
-            background-color: #e9ecef;
-            border-color: #bbb;
         }
         
         /* Form styles */
@@ -295,6 +282,11 @@
             background-color: #c82333;
         }
         
+        .btn-small {
+            padding: 0.4rem 0.8rem;
+            font-size: 0.8rem;
+        }
+        
         .form-actions {
             display: flex;
             gap: 1rem;
@@ -302,66 +294,103 @@
             margin-top: 1.5rem;
         }
         
-        /* Security section */
-        .security-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 0;
-            border-bottom: 1px solid #eee;
-        }
-        
-        .security-item:last-child {
-            border-bottom: none;
-        }
-        
-        .security-info h4 {
-            margin-bottom: 0.3rem;
-            font-size: 0.95rem;
-        }
-        
-        .security-info p {
-            color: #666;
-            font-size: 0.85rem;
-        }
-        
-        /* Danger zone */
-        .danger-zone {
-            border: 1px solid #dc3545;
-            border-radius: 8px;
-            background-color: #fff5f5;
-        }
-        
-        .danger-zone .section-title {
-            color: #dc3545;
+        /* Search */
+        .search-box {
             margin-bottom: 1rem;
         }
         
-        .danger-actions {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
+        .search-input {
+            width: 100%;
+            max-width: 400px;
+            padding: 0.7rem 0.7rem 0.7rem 2.5rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%23666" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>') no-repeat 0.7rem center;
+            background-size: 1rem;
         }
         
-        .danger-item {
+        /* Link items */
+        .link-item {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .link-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            border-color: #4285f4;
+        }
+        
+        .link-header {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            gap: 1rem;
+            margin-bottom: 0.5rem;
         }
         
-        .danger-info h4 {
-            color: #dc3545;
+        .link-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #333;
             margin-bottom: 0.3rem;
-            font-size: 0.95rem;
         }
         
-        .danger-info p {
+        .link-url {
+            color: #4285f4;
+            text-decoration: none;
+            font-weight: 500;
+            word-break: break-all;
+            font-size: 0.9rem;
+        }
+        
+        .link-url:hover {
+            text-decoration: underline;
+        }
+        
+        .link-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .link-description {
             color: #666;
-            font-size: 0.85rem;
+            margin-top: 0.5rem;
+            line-height: 1.5;
+            font-size: 0.9rem;
         }
         
-        /* Modal for delete confirmation */
+        .link-meta {
+            font-size: 0.8rem;
+            color: #999;
+            margin-top: 0.5rem;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: #666;
+        }
+        
+        .empty-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+        
+        .edit-form {
+            background: #e3f2fd;
+            border: 2px solid #4285f4;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        /* Modal */
         .modal {
             display: none;
             position: fixed;
@@ -424,6 +453,33 @@
             font-size: 0.85rem;
         }
         
+        /* Notification */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            color: white;
+            font-weight: 600;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            z-index: 1001;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        .notification.success {
+            background-color: #28a745;
+        }
+        
+        .notification.error {
+            background-color: #dc3545;
+        }
+        
         /* Responsive */
         @media (max-width: 992px) {
             .container {
@@ -470,23 +526,26 @@
                 grid-template-columns: 1fr;
             }
             
-            .avatar-section {
-                flex-direction: column;
-                text-align: center;
-            }
-            
             .form-actions {
                 flex-direction: column;
             }
             
-            .danger-item {
+            .link-header {
                 flex-direction: column;
-                align-items: stretch;
+                gap: 1rem;
+            }
+            
+            .link-actions {
+                align-self: flex-start;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
-<body id="user-profile">
+<body id="link-manager">
     <header class="header">
         <a href="dashboard.html" class="logo">
             <span class="logo-icon">🔗</span>
@@ -495,101 +554,112 @@
     </header>
     
     <div class="container">
-
-    <?php require_once __DIR__ . '/partials/user_sidebar.php'  ?>
+        <?php require_once __DIR__ . '/partials/user_sidebar.php'  ?>
+        
         <main class="main-content">
             <div class="page-header">
-                <h1 class="page-title">Perfil do Usuário</h1>
-                <p class="page-subtitle">Gerencie suas informações pessoais e configurações de conta</p>
+                <h1 class="page-title">Gerenciador de Links</h1>
+                <p class="page-subtitle">Organize e gerencie seus links favoritos</p>
             </div>
             
-            <!-- Informações Pessoais -->
+            <!-- Estatísticas -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <span class="stat-number" id="totalLinks">0</span>
+                    <span class="stat-label">Total de Links</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number" id="filteredLinks">0</span>
+                    <span class="stat-label">Links Filtrados</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number" id="recentLinks">0</span>
+                    <span class="stat-label">Adicionados Hoje</span>
+                </div>
+            </div>
+
+            <!-- Cadastro de Links -->
             <div class="profile-section">
                 <h2 class="section-title">
-                    <span class="section-icon">👤</span>
-                    Informações Pessoais
+                    <span class="section-icon">➕</span>
+                    Cadastrar Novo Link
                 </h2>
                 
-                <div class="avatar-section">
-                    <div class="avatar-info">
-                        <div class="avatar-name"><?= $userName ?></div>
-                        <div class="avatar-email"><?= $userEmail ?></div>
-                    </div>
-                </div>
-                
-                <form id="update-user-info" action="updateUserInfo" method="POST">
+                <form id="linkForm">
                     <div class="form-grid">
                         <div class="form-group">
-                            <label for="name">Nome</label>
-                            <input type="text" id="newname" name="newname" value= <?= $userName ?> required>
+                            <label for="linkTitle">Título do Link</label>
+                            <input type="text" id="linkTitle" name="linkTitle" placeholder="Ex: Google" required>
                         </div>
                         
                         <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" id="newemail" name="newemail" value="<?= htmlspecialchars($userEmail, ENT_QUOTES, 'UTF-8') ?>" required>
+                            <label for="linkUrl">URL</label>
+                            <input type="url" id="linkUrl" name="linkUrl" placeholder="https://exemplo.com" required>
                         </div>
                         
+                        <div class="form-group full-width">
+                            <label for="linkDescription">Descrição (opcional)</label>
+                            <textarea id="linkDescription" name="linkDescription" placeholder="Breve descrição do link"></textarea>
+                        </div>
+                    </div>
+                    
                     <div class="form-actions">
-                        <button type="button" class="btn btn-secondary">Cancelar</button>
-                        <button  type="submit" class="btn btn-primary">
-                            <span>💾</span> Salvar Alterações
+                        <button type="button" class="btn btn-secondary" onclick="clearForm()">Limpar</button>
+                        <button type="submit" class="btn btn-primary">
+                            <span>💾</span> Adicionar Link
                         </button>
                     </div>
                 </form>
             </div>
-            
-            <!-- Segurança -->
+
+            <!-- Busca e Filtros -->
             <div class="profile-section">
                 <h2 class="section-title">
-                    <span class="section-icon">🔒</span>
-                    Segurança
+                    <span class="section-icon">🔍</span>
+                    Buscar Links
                 </h2>
                 
-                <div class="security-item">
-                    <div class="security-info">
-                        <h4>Senha</h4>
-                        <p>Última alteração  <?= $passLastUpdateFormatted ?> </p>
-                    </div>
+                <div class="search-box">
+                    <input type="search" class="search-input" id="searchInput" placeholder="Digite para buscar links..." onkeyup="filterLinks()">
                 </div>
-                <div class="change-pass">
-                    <form id="change-password"  action="changePassword" method="post">                          
-                        <div class="form-group">
-                            <label for="current_password">Senha atual</label>
-                            <input type="password" id="current_password" name="current_password"  required/>
-                        </div>
-                        <div class="form-group">
-                            <label for="new_password">Nova senha</label>
-                            <input type="password"  id="new_password" name="new_password" required/>
-                        </div>
-                        <button type="submit" class="btn btn-secondary">Alterar Senha</button>
-
-                    </form>
-                    <span class="feedback"></span>
-                </div>
-                
             </div>
-            
-            <!-- Zona de Perigo -->
-            <div class="profile-section danger-zone">
+
+            <!-- Lista de Links -->
+            <div class="profile-section">
                 <h2 class="section-title">
-                    <span class="section-icon">⚠️</span>
-                    Zona de Perigo
+                    <span class="section-icon">📋</span>
+                    Meus Links
                 </h2>
                 
-                <div class="danger-actions">
-                    
-                    <div class="danger-item">
-                        <div class="danger-info">
-                            <h4>Excluir Conta</h4>
-                            <p>Remova permanentemente sua conta e todos os dados associados. Esta ação não pode ser desfeita.</p>
+                <!-- Formulário de Edição -->
+                <div id="editForm" class="edit-form" style="display: none;">
+                    <h3>✏️ Editando Link</h3>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="editTitle">Título</label>
+                            <input type="text" id="editTitle" name="editTitle">
                         </div>
-                    <form id="delete-account-form">
-                        <button type="submit" class="btn btn-danger" id="delete-account-btn">
-                            <span>🗑️</span> Excluir Conta
+                        
+                        <div class="form-group">
+                            <label for="editUrl">URL</label>
+                            <input type="url" id="editUrl" name="editUrl">
+                        </div>
+                        
+                        <div class="form-group full-width">
+                            <label for="editDescription">Descrição</label>
+                            <textarea id="editDescription" name="editDescription"></textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" onclick="cancelEdit()">Cancelar</button>
+                        <button type="button" class="btn btn-primary" onclick="saveEdit()">
+                            <span>💾</span> Salvar Alterações
                         </button>
-                    </form>
                     </div>
                 </div>
+                
+                <div id="linksList"></div>
             </div>
         </main>
     </div>
@@ -599,15 +669,15 @@
         <div class="modal-content">
             <div class="modal-header">
                 <div class="modal-icon">⚠️</div>
-                <h3 class="modal-title">Excluir Conta</h3>
+                <h3 class="modal-title">Excluir Link</h3>
             </div>
             <p class="modal-text">
-                Tem certeza de que deseja excluir sua conta? Esta ação é irreversível e todos os seus dados, incluindo links e estatísticas, serão permanentemente removidos.
+                Tem certeza de que deseja excluir este link? Esta ação não pode ser desfeita.
             </p>
             <div class="modal-actions">
-                <button class="btn btn-secondary" id="cancel-delete">Cancelar</button>
-                <button class="btn btn-danger" id="confirm-delete">
-                    <span>🗑️</span> Sim, Excluir Conta
+                <button class="btn btn-secondary" onclick="closeDeleteModal()">Cancelar</button>
+                <button class="btn btn-danger" onclick="confirmDelete()">
+                    <span>🗑️</span> Sim, Excluir
                 </button>
             </div>
         </div>
@@ -616,6 +686,6 @@
     <footer class="footer">
         &copy; 2025 Gerenciador de Links. Todos os direitos reservados.
     </footer>
-<script src="js/auth.js"> </script>
+<script src="js/functions.js"> </script>
 </body>
 </html>

@@ -10,5 +10,7 @@ return [
     'profilePage' => 'UserController@showProfilePage',
     'changePassword' => 'UserController@changePassword',
     'updateUserInfo' => 'UserController@updateUserInfo',
+    'deleteUserAccount' => 'UserController@deleteUserAccount',
+    'linkControllerPage' => 'LinksController@showLinkController'
 
 ];

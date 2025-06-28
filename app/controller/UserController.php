@@ -241,6 +241,31 @@ class UserController{
             ]);
         }
     }
-    
+    public function deleteUserAccount(){
+        try{
+            header('Content-Type: application/json');
+            $deleteUser = $this->model->deleteuser();
+
+            if($deleteUser['success'] === true){
+                echo json_encode([
+                    'status'=> 'success',
+                    'message'=> 'Conta deletada com sucesso',
+                    'redirect' => './'
+                ]);
+            }
+            else{
+            echo json_encode([
+                'status' => 'error',
+                'message' => $deleteUser['message']
+            ]);
+            }
+        }
+        catch(PDOException $e){
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Erro ao atualizar deletar usuário',
+            ]);
+        }
+    }
 }
 ?>

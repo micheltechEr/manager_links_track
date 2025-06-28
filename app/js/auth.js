@@ -159,12 +159,41 @@ function changeInfo(){
     }
 }
 
+function deleteUserAccount(){  
+  var userProfilePage = document.getElementById('user-profile');
+  if(userProfilePage){
+        document.getElementById('delete-account-btn').addEventListener("click",async function (e){
+            e.preventDefault();            
+            try {
+                const res = await fetch('deleteUserAccount', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    }
+                });
+
+                const data = await res.json();
+                document.querySelector('.feedback').textContent = data.message;
+                if (data.status === 'success') {
+                    window.location.href = data.redirect;
+                }
+
+            } catch (error) {
+                console.error('Erro ao processar os dados:', error);
+                document.querySelector('.feedback').textContent = 'Erro interno no servidor';
+            } 
+
+        })
+    }
+}
+
 window.addEventListener("load", function () {
     validateSignUpData();
     validateSignIn();
     logoutUser();
     changePassword();
     changeInfo();
+    deleteUserAccount();
 });
 
 

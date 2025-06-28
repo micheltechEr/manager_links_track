@@ -207,9 +207,18 @@ class User
     }
     public function deleteuser(){
         try{
+
+            if(!$this->isLogged()['logged']){
+                return[
+                    'success' => false,
+                    'logged' => false,
+                    'message' => 'Usuário não autenticado'
+                ];
+            }
+            
             $userId = $_SESSION['user_id'];
-            $stmt = $this->pdo->prepare("DELETE FROM users WHERE id = ?");
-            $stmt->execute($userId);
+            $stmt = $this->pdo->prepare("DELETE FROM `users` WHERE `id` = ?");
+            $stmt->execute([$userId]);
             $this->logout();
             return[
                 'success' => true,

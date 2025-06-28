@@ -6,7 +6,7 @@
                 Dashboard</a>
         </li>
         <li>
-            <a href="#">
+            <a href="linkControllerPage">
                 <span class="menu-icon">🔗</span>
                 Meus Links</a>
         </li>
