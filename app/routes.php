@@ -11,6 +11,9 @@ return [
     'changePassword' => 'UserController@changePassword',
     'updateUserInfo' => 'UserController@updateUserInfo',
     'deleteUserAccount' => 'UserController@deleteUserAccount',
-    'linkControllerPage' => 'LinksController@showLinkController'
+    'linkControllerPage' => 'LinksController@showLinkController',
+    'saveLinks' => 'LinksController@saveLinks',
+    'listLinks' => 'LinksController@listLinks',
+    
 
 ];

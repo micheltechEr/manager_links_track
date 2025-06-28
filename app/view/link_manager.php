@@ -568,14 +568,6 @@
                     <span class="stat-number" id="totalLinks">0</span>
                     <span class="stat-label">Total de Links</span>
                 </div>
-                <div class="stat-card">
-                    <span class="stat-number" id="filteredLinks">0</span>
-                    <span class="stat-label">Links Filtrados</span>
-                </div>
-                <div class="stat-card">
-                    <span class="stat-number" id="recentLinks">0</span>
-                    <span class="stat-label">Adicionados Hoje</span>
-                </div>
             </div>
 
             <!-- Cadastro de Links -->
@@ -585,7 +577,7 @@
                     Cadastrar Novo Link
                 </h2>
                 
-                <form id="linkForm">
+                <form method="POST" action="saveLinks"  id="linkForm" name="linkForm">
                     <div class="form-grid">
                         <div class="form-group">
                             <label for="linkTitle">Título do Link</label>
@@ -610,18 +602,6 @@
                         </button>
                     </div>
                 </form>
-            </div>
-
-            <!-- Busca e Filtros -->
-            <div class="profile-section">
-                <h2 class="section-title">
-                    <span class="section-icon">🔍</span>
-                    Buscar Links
-                </h2>
-                
-                <div class="search-box">
-                    <input type="search" class="search-input" id="searchInput" placeholder="Digite para buscar links..." onkeyup="filterLinks()">
-                </div>
             </div>
 
             <!-- Lista de Links -->

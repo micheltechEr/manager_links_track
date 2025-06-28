@@ -6,61 +6,55 @@
         // Carrega links salvos no início
         window.onload = function() {
             loadLinks();
-            updateStats();
         };
 
         function loadLinks() {
             const savedLinks = JSON.parse(localStorage.getItem('savedLinks') || '[]');
             links = savedLinks;
             displayLinks();
-            updateStats();
         }
 
         function saveLinks() {
             localStorage.setItem('savedLinks', JSON.stringify(links));
         }
 
-        // Cadastrar novo link
-        document.getElementById('linkForm').addEventListener('submit', function(e) {
+        document.getElementById('linkForm').addEventListener('submit',async function(e) {
             e.preventDefault();
-            
-            const title = document.getElementById('linkTitle').value.trim();
-            const url = document.getElementById('linkUrl').value.trim();
-            const description = document.getElementById('linkDescription').value.trim();
-            
-            if (title && url) {
-                const newLink = {
-                    id: Date.now(),
-                    title: title,
-                    url: url,
-                    description: description,
-                    dateAdded: new Date().toLocaleDateString('pt-BR'),
-                    dateCreated: new Date()
-                };
+            const formData = new FormData(this);
+            try{
+                const res = await fetch('saveLinks', {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await res.json();
                 
-                links.unshift(newLink);
-                saveLinks();
-                displayLinks();
-                updateStats();
-                
-                // Limpar formulário
-                document.getElementById('linkForm').reset();
-                
-                // Feedback visual
-                showNotification('Link adicionado com sucesso!', 'success');
+                if(data.status === 'success'){
+                    saveLinks();
+                    displayLinks();
+                    document.getElementById('linkForm').reset();                
+                    showNotification('Link adicionado com sucesso!', 'success');
+                }
+            }
+            catch(error){
+                console.error('Erro ao processar registro do link')
             }
         });
 
-        // Limpar formulário
         function clearForm() {
             document.getElementById('linkForm').reset();
         }
 
         // Exibir links
-        function displayLinks(linksToShow = links) {
+    async function displayLinks(linksToShow = links) {
             const linksList = document.getElementById('linksList');
             
-            if (linksToShow.length === 0) {
+            try{
+                const res =  await fetch("listLinks",{
+                    method: 'GET'
+                });
+                const dataLinks = await res.json();
+                const contentLinks = dataLinks.data;
+                if (contentLinks.length == 0) {
                 linksList.innerHTML = `
                     <div class="empty-state">
                         <div class="empty-icon">🔗</div>
@@ -70,32 +64,31 @@
                 `;
                 return;
             }
-            
-            linksList.innerHTML = linksToShow.map((link, index) => `
+            linksList.innerHTML = contentLinks.map((link, index) => `
                 <div class="link-item">
                     <div class="link-header">
                         <div>
                             <div class="link-title">${link.title}</div>
-                            <a href="${link.url}" target="_blank" class="link-url">${link.url}</a>
+                            <a href="${link.url_link}" target="_blank" class="link-url">${link.url_link}</a>
                         </div>
                         <div class="link-actions">
-                            <button onclick="editLink(${links.indexOf(link)})" class="btn btn-secondary btn-small">
+                            <button onclick="editLink(${contentLinks.indexOf(link)})" class="btn btn-secondary btn-small">
                                 <span>✏️</span> Editar
                             </button>
-                            <button onclick="deleteLink(${links.indexOf(link)})" class="btn btn-danger btn-small">
+                            <button onclick="deleteLink(${contentLinks.indexOf(link)})" class="btn btn-danger btn-small">
                                 <span>🗑️</span> Excluir
                             </button>
                         </div>
                     </div>
                     ${link.description ? `<div class="link-description">${link.description}</div>` : ''}
-                    <div class="link-meta">
-                        Adicionado em: ${link.dateAdded}
-                    </div>
                 </div>
             `).join('');
         }
 
-        // Editar link
+            catch(error){
+                console.error(error);
+            }
+
         function editLink(index) {
             editingIndex = index;
             const link = links[index];
@@ -146,7 +139,6 @@
                 links.splice(deleteIndex, 1);
                 saveLinks();
                 displayLinks();
-                updateStats();
                 closeDeleteModal();
                 showNotification('Link excluído com sucesso!', 'success');
                 
@@ -162,30 +154,7 @@
             deleteIndex = -1;
         }
 
-        // Filtrar links
-        function filterLinks() {
-            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-            const filteredLinks = links.filter(link => 
-                link.title.toLowerCase().includes(searchTerm) ||
-                link.url.toLowerCase().includes(searchTerm) ||
-                (link.description && link.description.toLowerCase().includes(searchTerm))
-            );
-            
-            displayLinks(filteredLinks);
-            updateStats(filteredLinks.length);
-        }
 
-        // Atualizar estatísticas
-        function updateStats(filtered = null) {
-            const today = new Date().toLocaleDateString('pt-BR');
-            const recentCount = links.filter(link => link.dateAdded === today).length;
-            
-            document.getElementById('totalLinks').textContent = links.length;
-            document.getElementById('filteredLinks').textContent = filtered !== null ? filtered : links.length;
-            document.getElementById('recentLinks').textContent = recentCount;
-        }
-
-        // Notificação
         function showNotification(message, type) {
             const notification = document.createElement('div');
             notification.className = `notification ${type}`;
@@ -212,3 +181,4 @@
                 closeDeleteModal();
             }
         }
+    }
