@@ -2,8 +2,8 @@
         let links = [];
         let editingIndex = -1;
         let deleteIndex = -1;
+        let contentLinks = [];
 
-        // Carrega links salvos no início
         window.onload = function() {
             loadLinks();
         };
@@ -53,7 +53,7 @@
                     method: 'GET'
                 });
                 const dataLinks = await res.json();
-                const contentLinks = dataLinks.data;
+                 contentLinks = dataLinks.data;
                 if (contentLinks.length == 0) {
                 linksList.innerHTML = `
                     <div class="empty-state">
@@ -68,6 +68,7 @@
                 <div class="link-item">
                     <div class="link-header">
                         <div>
+                            <input type="hidden" id="linkIdHidden" name="link_id" value=${link.id} >
                             <div class="link-title">${link.title}</div>
                             <a href="${link.url_link}" target="_blank" class="link-url">${link.url_link}</a>
                         </div>
@@ -83,52 +84,64 @@
                     ${link.description ? `<div class="link-description">${link.description}</div>` : ''}
                 </div>
             `).join('');
+
         }
 
             catch(error){
                 console.error(error);
             }
+    }
 
-        function editLink(index) {
-            editingIndex = index;
-            const link = links[index];
-            
-            document.getElementById('editTitle').value = link.title;
-            document.getElementById('editUrl').value = link.url;
-            document.getElementById('editDescription').value = link.description || '';
-            
-            document.getElementById('editForm').style.display = 'block';
-            document.getElementById('editForm').scrollIntoView({ behavior: 'smooth' });
-        }
+    function editLink(index) {
+        const link = contentLinks[index]; // pegar o link do array
+        document.getElementById('editTitle').value = link.title;
+        document.getElementById('editUrl').value = link.url_link;
+        document.getElementById('editDescription').value = link.description;
+        document.getElementById('linkIdHidden').value = link.id; // muito importante!
+        document.getElementById('editForm').style.display = 'block';
+        document.getElementById('editForm').scrollIntoView({ behavior: 'smooth' });
+    }
 
-        function saveEdit() {
-            if (editingIndex >= 0) {
-                const title = document.getElementById('editTitle').value.trim();
-                const url = document.getElementById('editUrl').value.trim();
-                const description = document.getElementById('editDescription').value.trim();
-                
-                if (title && url) {
-                    links[editingIndex] = {
-                        ...links[editingIndex],
-                        title: title,
-                        url: url,
-                        description: description
-                    };
-                    
-                    saveLinks();
-                    displayLinks();
-                    cancelEdit();
-                    showNotification('Link atualizado com sucesso!', 'success');
-                }
+
+    function saveEdit() {
+    try {
+        const formData = new FormData();
+        formData.append("editTitle", document.getElementById("editTitle").value);
+        formData.append("editUrl", document.getElementById("editUrl").value);
+        formData.append("editDescription", document.getElementById("editDescription").value);
+        formData.append("link_id", document.getElementById("linkIdHidden").value);
+
+        fetch("editLinks", {
+            method: "POST",
+            body: formData
+        })
+        .then(res => res.json())
+        .then(data => {
+            
+            if (data.status === "success") {
+                saveLinks();
+                displayLinks();
+                cancelEdit();
+                showNotification('Link atualizado com sucesso!', 'success');
+            } else {
+                showNotification(data.message, 'error');
+                console.warn("Resposta com erro:", data);
             }
-        }
+        })
+        .catch(err => {
+            console.error("Erro ao enviar:", err);
+            showNotification('Erro ao atualizar link!', 'error');
+        });
+    } catch (error) {
+        console.error(error);
+    }
+}
 
         function cancelEdit() {
             editingIndex = -1;
             document.getElementById('editForm').style.display = 'none';
         }
 
-        // Excluir link
         function deleteLink(index) {
             deleteIndex = index;
             document.getElementById('delete-modal').style.display = 'block';
@@ -181,4 +194,3 @@
                 closeDeleteModal();
             }
         }
-    }

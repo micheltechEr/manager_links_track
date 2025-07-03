@@ -14,6 +14,5 @@ return [
     'linkControllerPage' => 'LinksController@showLinkController',
     'saveLinks' => 'LinksController@saveLinks',
     'listLinks' => 'LinksController@listLinks',
-    
-
+    'editLinks' => 'LinksController@editLinks',
 ];

@@ -565,7 +565,7 @@
             <!-- Estatísticas -->
             <div class="stats-grid">
                 <div class="stat-card">
-                    <span class="stat-number" id="totalLinks">0</span>
+                    <span class="stat-number" id="totalLinks"><?= $totalLinks ?></span>
                     <span class="stat-label">Total de Links</span>
                 </div>
             </div>
@@ -612,8 +612,9 @@
                 </h2>
                 
                 <!-- Formulário de Edição -->
-                <div id="editForm" class="edit-form" style="display: none;">
+                <div id="editForm" class="edit-form" style="display: none;" >
                     <h3>✏️ Editando Link</h3>
+                    <form action="editLink" id="editLink" method="POST" name="editForm">
                     <div class="form-grid">
                         <div class="form-group">
                             <label for="editTitle">Título</label>
@@ -637,6 +638,8 @@
                             <span>💾</span> Salvar Alterações
                         </button>
                     </div>
+                </span>
+                    </form>
                 </div>
                 
                 <div id="linksList"></div>
