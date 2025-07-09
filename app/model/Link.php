@@ -68,6 +68,19 @@ class Link{
             return false;
         }
     }
+
+    public function registerClick($link_id,$ip_address, $browser, $referer) {
+        try {
+            $timestampAtual = time();
+            $clicked_at = date("Y-m-d H:i:s", $timestampAtual);
+            $stmt = $this->pdo->prepare("INSERT INTO link_clicks (link_id, clicked_at ,ip_address, user_agent, referrer) VALUES (?, ?,?, ?, ?)");
+            $stmt->execute([$link_id, $clicked_at,$ip_address, $browser, $referer]);
+            return true;
+        } catch (PDOException $e) {
+            echo("Erro ao registrar clique: " . $e->getMessage());
+            return false;
+        }
+    }
     public function editLink($link_id, $newTitle = null, $newUrl = null, $newDescription = null) {
         try {
             // Remover aspas simples/duplas do início e fim, se existirem

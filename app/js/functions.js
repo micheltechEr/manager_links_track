@@ -70,7 +70,7 @@
                         <div>
                             <input type="hidden" id="linkIdHidden" name="link_id" value=${link.id} >
                             <div class="link-title">${link.title}</div>
-                            <a href="${link.url_link}" target="_blank" class="link-url">${link.url_link}</a>
+                            <a href="redirect.php?id=${link.id}" target="_blank" class="link-url">${link.url_link}</a>
                         </div>
                         <div class="link-actions">
                             <button onclick="editLink(${contentLinks.indexOf(link)})" class="btn btn-secondary btn-small">
