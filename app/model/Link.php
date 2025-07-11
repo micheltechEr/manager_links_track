@@ -123,6 +123,23 @@ class Link{
             return false;
         }
     }
+    public function deleteLink($link_id) {
+        try {
+            $stmt = $this->pdo->prepare("DELETE FROM links WHERE id = ?");
+            if(empty($link_id)) {
+            return[
+                'success' => false,
+                'message' => 'ID não encontrado'
+            ];
+            }
+            return $stmt->execute([$link_id]);
+        } catch (PDOException $e) {
+            return[
+                'success' => false,
+                'message' => 'Erro ao deletar link: ' . $e->getMessage()
+            ];
+        }
+    }
 
 }
 ?>

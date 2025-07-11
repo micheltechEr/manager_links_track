@@ -577,7 +577,6 @@
                 </h2>
                 
                 <div class="danger-actions">
-                    
                     <div class="danger-item">
                         <div class="danger-info">
                             <h4>Excluir Conta</h4>

@@ -170,6 +170,44 @@ class LinksController
         ]);
     }
 }
+    public function removeLinks(){
+        try{
+            header('Content-Type:application/json');
+            $link_id = $_POST['link_id'] ?? null;
+            if (empty($link_id)) {
+                echo json_encode([
+                    'status' => 'error',
+                    'message' => 'ID do link não informado'
+                ]);
+                return;
+            }
+            $currentLink = $this->modelLink->getLinkById($link_id);
+            if (!$currentLink) {
+                echo json_encode([
+                    'status' => 'error',
+                    'message' => 'Link não encontrado'
+                ]);
+                return;
+            }
+            $result = $this->modelLink->deleteLink($link_id);
+            if ($result) {
+                echo json_encode([
+                    'status' => 'success',
+                    'message' => 'Link removido com sucesso'
+                ]);
+            } else {
+                echo json_encode([
+                    'status' => 'error',
+                    'message' => 'Falha ao remover o link'
+                ]);
+            }
+        } catch (PDOException $e) {
+            echo json_encode([
+                'status' => 'error',
+                'message' => $e->getMessage()
+            ]);
+        }
+    }
 
 }
 ?>
