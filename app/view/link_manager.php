@@ -562,14 +562,6 @@
                 <p class="page-subtitle">Organize e gerencie seus links favoritos</p>
             </div>
             
-            <!-- Estatísticas -->
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <span class="stat-number" id="totalLinks"><?= $totalLinks ?></span>
-                    <span class="stat-label">Total de Links</span>
-                </div>
-            </div>
-
             <!-- Cadastro de Links -->
             <div class="profile-section">
                 <h2 class="section-title">

@@ -1,7 +1,7 @@
 <aside class="sidebar">
     <ul class="sidebar-menu">
         <li>
-            <a href="#" class="active">
+            <a href="dashboard" class="active">
                 <span class="menu-icon">📊</span>
                 Dashboard</a>
         </li>

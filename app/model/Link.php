@@ -9,13 +9,20 @@ class Link{
     }
 
     public function doesExistLink($url){
-        $stmt = $this->pdo->prepare("SELECT id, url_link FROM links WHERE url_link = ?");
+        $stmt = $this->pdo->prepare("SELECT id, url_link, user_id FROM links WHERE url_link = ?");
         $stmt->execute([$url]);
         $link = $stmt->fetch(PDO::FETCH_ASSOC);
         if($link){
             return $link;
         }
         return false;
+    }
+
+    public function userByLink($link){
+        $stmt = $this->pdo->prepare("SELECT user_id FROM links WHERE url_link = ?");
+        $stmt->execute([$link]);
+        $user_link = $stmt->fetchColumn();
+        return $user_link;
     }
 
     public function registerLink($title,$url_link,$description,$user_id){
@@ -68,13 +75,27 @@ class Link{
             return false;
         }
     }
+    public function countClickLinks(){
+        try{
+            $stmt = $this->pdo->prepare("SELECT COUNT(*) as total_click_links FROM link_clicks ");
+            $stmt->execute([]);
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            if($result){
+                return $result['total_click_links'];
+            }
+        }
+        catch(PDOException $e){
+            error_log("Erro durante a contagem dos links");
+            return false;
+        }
+    }
 
-    public function registerClick($link_id,$ip_address, $browser, $referer) {
+    public function registerClick($link_id,$ip_address, $browser, $referer,$user_id) {
         try {
             $timestampAtual = time();
             $clicked_at = date("Y-m-d H:i:s", $timestampAtual);
-            $stmt = $this->pdo->prepare("INSERT INTO link_clicks (link_id, clicked_at ,ip_address, user_agent, referrer) VALUES (?, ?,?, ?, ?)");
-            $stmt->execute([$link_id, $clicked_at,$ip_address, $browser, $referer]);
+            $stmt = $this->pdo->prepare("INSERT INTO link_clicks (link_id, clicked_at ,ip_address, user_agent, referrer,user_id) VALUES (?, ?,?, ?, ?,?)");
+            $stmt->execute([$link_id, $clicked_at,$ip_address, $browser, $referer,$user_id]);
             return true;
         } catch (PDOException $e) {
             echo("Erro ao registrar clique: " . $e->getMessage());

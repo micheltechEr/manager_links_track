@@ -26,12 +26,7 @@ class LinksController
                     echo "Nenhum gerenciador de links encontrado";
                     return;
                 }
-                $totalLinks = $this->modelLink->countLinks($_SESSION['user_id']);
-                if ($totalLinks === false) {
-                    http_response_code(500);
-                    echo "Erro ao contar links";
-                    return;
-                }
+
                 require $viewPath;
             }
             else{

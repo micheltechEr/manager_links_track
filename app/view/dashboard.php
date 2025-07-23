@@ -547,35 +547,14 @@
             <div class="stats-grid">
                 <div class="stat-card">
                     <div class="stat-title">Total de Links</div>
-                    <div class="stat-value">156</div>
-                    <div class="stat-trend trend-up">
-                        <span class="trend-icon">↑</span> 12% este mês
-                    </div>
+                    <div class="stat-value"><?= $totalLinks ?></div>
                 </div>
                 
                 <div class="stat-card">
                     <div class="stat-title">Total de Cliques</div>
-                    <div class="stat-value">24.8K</div>
-                    <div class="stat-trend trend-up">
-                        <span class="trend-icon">↑</span> 18% este mês
-                    </div>
+                    <div class="stat-value"><?= $totalCountLinks ?></div>
                 </div>
                 
-                <div class="stat-card">
-                    <div class="stat-title">Taxa de Cliques</div>
-                    <div class="stat-value">4.2%</div>
-                    <div class="stat-trend trend-up">
-                        <span class="trend-icon">↑</span> 2.1% este mês
-                    </div>
-                </div>
-                
-                <div class="stat-card">
-                    <div class="stat-title">Links Ativos</div>
-                    <div class="stat-value">142</div>
-                    <div class="stat-trend trend-down">
-                        <span class="trend-icon">↓</span> 3% este mês
-                    </div>
-                </div>
             </div>
             
             <div class="chart-container">
@@ -594,43 +573,6 @@
                 </div>
             </div>
             
-            <div class="links-section">
-                <div class="links-header">
-                    <h2 class="links-title">Links Recentes</h2>
-                    <div class="search-box">
-                        <span class="search-icon">🔍</span>
-                        <input type="text" class="search-input" placeholder="Buscar links...">
-                    </div>
-                </div>
-                
-                <table class="links-table">
-                    <thead>
-                        <tr>
-                            <th>Link</th>
-                            <th>Cliques</th>
-                            <th>Data de Criação</th>
-                            <th>Status</th>
-                            <th>Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="link-url">
-                                <div class="original-url">https://exemplo.com/pagina-com-url-muito-longo-que-precisa-ser-encurtado</div>
-                                <a href="#" class="short-url">encrt.io/a1b2c3</a>
-                            </td>
-                            <td class="link-clicks">1,245</td>
-                            <td class="link-date">12/05/2025</td>
-                            <td><span class="link-status status-active">Ativo</span></td>
-                            <td class="link-actions">
-                                <button class="action-btn" title="Editar">✏️</button>
-                                <button class="action-btn" title="Estatísticas">📊</button>
-                                <button class="action-btn" title="Copiar">📋</button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
         </main>
     </div>
     
