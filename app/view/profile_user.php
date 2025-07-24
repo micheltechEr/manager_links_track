@@ -106,7 +106,7 @@
             color: #4285f4;
         }
         
-        .sidebar-menu a.active {
+        .sidebar-menu li:nth-child(4) a {
             background-color: #ebf2fe;
             color: #4285f4;
             border-left: 3px solid #4285f4;

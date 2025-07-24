@@ -16,8 +16,7 @@ $user_id = $modelLink->userByLink($link['url_link']);
 
 $ip_address = $_SERVER['REMOTE_ADDR'];
 $browser = $_SERVER['HTTP_USER_AGENT'];
-$referer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['
-'] : 'Direto';
+$referer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER[''] : 'Direto';
 
 $returnRegister = $modelLink->registerClick($linkId, $ip_address, $browser, $referer,$user_id);
 if(!$returnRegister) {

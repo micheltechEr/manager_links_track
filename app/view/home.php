@@ -218,11 +218,15 @@
                     <div class="feature-list">
                         <div class="feature-item">
                             <span class="feature-icon">✓</span>
-                            <span>Encurte URLs longos com apenas um clique</span>
+                            <span><strong>Crie  links rastreáveis</strong>  para qualquer destino na web.</span>
                         </div>
                         <div class="feature-item">
                             <span class="feature-icon">✓</span>
-                            <span>Simplifique URLs complexos para compartilhamento fácil</span>
+                            <span><strong>Meça a performance real</strong> de cada link que você compartilha.</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span><strong>Transforme cliques em insights</strong> com nossos gráfico de análise diária.</span>
                         </div>
                     </div>
                     

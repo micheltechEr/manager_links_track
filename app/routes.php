@@ -16,4 +16,5 @@ return [
     'listLinks' => 'LinksController@listLinks',
     'editLinks' => 'LinksController@editLinks',
     'removeLinks' => 'LinksController@removeLinks',
+    
 ];

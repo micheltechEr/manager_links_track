@@ -161,6 +161,23 @@ class Link{
             ];
         }
     }
+    public function getOverClicksHistoryOnDay($user_id){
+        $sql="SELECT 
+            DATE_FORMAT(c.clicked_at, '%d/%m') as dia, 
+            COUNT(c.id) as total_cliques
+        FROM link_clicks c
+        JOIN links l ON c.link_id = l.id
+        WHERE 
+            l.user_id = ? AND
+            c.clicked_at >= DATE_SUB(NOW(), INTERVAL 30 DAY)
+        GROUP BY 
+            dia
+        ORDER BY 
+            dia ASC";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([$user_id]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 
 }
 ?>

@@ -1,7 +1,7 @@
 <aside class="sidebar">
     <ul class="sidebar-menu">
         <li>
-            <a href="dashboard" class="active">
+            <a href="dashboard">
                 <span class="menu-icon">📊</span>
                 Dashboard</a>
         </li>
@@ -10,11 +10,11 @@
                 <span class="menu-icon">🔗</span>
                 Meus Links</a>
         </li>
-        <li>
+       <!-- <li>
             <a href="#">
                 <span class="menu-icon">📈</span>
                 Estatísticas</a>
-        </li>
+        </li> -->
 
         <div class="sidebar-divider"></div>
 

@@ -117,7 +117,7 @@
             color: #4285f4;
         }
         
-        .sidebar-menu a.active {
+        .sidebar-menu li:first-child a{
             background-color: #ebf2fe;
             color: #4285f4;
             border-left: 3px solid #4285f4;
@@ -539,9 +539,6 @@
         <main class="main-content">
             <div class="dashboard-header">
                 <h1 class="page-title">Dashboard</h1>
-                <button class="create-link">
-                    <span class="btn-icon">➕</span> Novo Link
-                </button>
             </div>
             
             <div class="stats-grid">
@@ -560,17 +557,10 @@
             <div class="chart-container">
                 <div class="chart-header">
                     <h2 class="chart-title">Desempenho dos Links</h2>
-                    <div class="chart-filters">
-                        <button class="chart-filter">Dia</button>
-                        <button class="chart-filter active">Semana</button>
-                        <button class="chart-filter">Mês</button>
-                        <button class="chart-filter">Ano</button>
-                    </div>
                 </div>
                 
-                <div class="chart-placeholder">
-                    [Gráfico de Desempenho dos Links]
-                </div>
+                <canvas id="dashboardChart"></canvas>
+
             </div>
             
         </main>
@@ -579,6 +569,8 @@
     <footer class="footer">
         &copy; 2025 Gerenciador de Links. Todos os direitos reservados.
     </footer>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/chart.js"> </script>
     <script src="js/auth.js"> </script>
 
 </body>
